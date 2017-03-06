@@ -1,7 +1,7 @@
 {
     "development": {
         "username": "root",
-        "password": "erp_mysql_root",
+        "password": "",
         "database": "think-admin",
         "host": "115.28.165.188",
         "dialect": "mysql",
@@ -16,7 +16,7 @@
     },
     "test": {
         "username": "root",
-        "password": "erp_mysql_root",
+        "password": "",
         "database": "think-admin",
         "host": "115.28.165.188",
         "dialect": "mysql",
@@ -31,7 +31,7 @@
     },
     "production": {
         "username": "root",
-        "password": "erp_mysql_root",
+        "password": "",
         "database": "think-admin",
         "host": "115.28.165.188",
         "dialect": "mysql",
