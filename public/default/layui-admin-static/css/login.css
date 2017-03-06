@@ -1,0 +1,121 @@
+/*头部*/
+.admin-header{
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+.admin-header-wrap{
+    height: 90px;
+    margin: 0 auto;
+    max-width: 1100px;
+    min-width: 750px;
+}
+
+.admin-logo{
+    width: auto;
+    height: 100%;
+    line-height: 90px;
+    float: left;
+}
+.admin-nav{
+    display: block;
+    width: auto;
+    height: 100%;
+    float: right;
+}
+.admin-nav-item{
+    display: inline-block;
+    float: left;
+    height: 100%;
+    padding: 0 23px;
+    line-height: 90px;
+    text-align: center;
+}
+.admin-nav-item a{
+    display: block;
+    /*font-family: FZLTHK;*/
+    font-size: 15px;
+    color: #4b4b4b;
+}
+.admin-active{
+    color: #118bd5!important;
+}
+
+/*login*/
+.admin-login{
+    width: 100%;
+    height: auto;
+    /*background: radial-gradient(#48b5f5 -25%, #017cc0 100%);
+    background: -webkit-radial-gradient(#48b5f5 -25%, #017cc0 100%);!* Safari and Chrome *!
+    background: -moz-radial-gradient(#48b5f5 -25%, #017cc0 100%);!* Firefox *!
+    background: -ms-radial-gradient(#48b5f5 -25%, #017cc0 100%);!* IE 9 *!
+    background: -o-radial-gradient(#48b5f5 -25%, #017cc0 100%);!* Opera *!*/
+    background: linear-gradient(to left, #289ADF, #1C95D7);
+    background: -webkit-linear-gradient(to left, #289ADF, #1C95D7);
+    background: -moz-linear-gradient(to left, #289ADF, #1C95D7);
+    background: -ms-linear-gradient(to left, #289ADF, #1C95D7);
+    background: -o-linear-gradient(to left, #289ADF, #1C95D7);
+}
+.admin-login-wrap{
+    height: 506px;
+    margin: 0 auto;
+    max-width: 1100px;
+   background-image: url(../images/login-bg.png);
+}
+.admin-login-right{
+    width: 340px;
+    height: 384px;
+    float: right;
+    margin-top: 61px;
+    margin-right: 15px;
+    z-index: 99;
+}
+.layui-tab-card>.layui-tab-title li{
+    display: inline-block;
+    width: 50%;
+    margin: 0;
+    padding: 0;
+    font-size: 17px;
+}
+.layui-tab-title .layui-this{
+    color: #ff790a;
+}
+.layui-tab-title .layui-this:after{
+    border:none;
+}
+.remember-account-box{
+    float: left;
+}
+.forget-password{
+    display: block;
+    float: right;
+}
+.common-info{
+    font-size: 12px;
+    color: #666666;
+}
+.layui-btn{
+    font-size: 18px;
+    background: #FF7909;
+    display: inline-block;
+    width: 100%;
+    border-radius: 3px;
+}
+.admin-account-register{
+    color: #666666;
+    font-size: 14px;
+    text-decoration: underline;
+}
+.layui-tab-bar{
+    display: none;
+}
+.layui-form-item .layui-input-inline{
+    width: 266px;
+    margin-right: 0;
+}
+
+@media screen and (max-width: 450px){
+    .layui-form-item .layui-input-inline {
+        margin: 0 0 10px 52px;
+    }
+}

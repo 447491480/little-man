@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title><%= _locals.setting.ADMIN_WEB_NAME %>-登录页</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" href="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/css/layui.css" media="all">
+    <link rel="stylesheet" href="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/css/login.css">
+    <link rel="stylesheet" href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/nprogress/nprogress.css">
+    <script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/nprogress/nprogress.js"></script>
+</head>
+<body>
+<!--头部-->
+<div class="admin-header">
+    <div class="admin-header-wrap">
+        <div class="admin-logo">
+            <img src="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/images/logo.png" alt="" class="admin-logo-img" height="63">
+        </div>
+        <ul class="admin-nav logo-right-space">
+            <li class="admin-nav-item">
+                <a href="javascript:;" class="admin-active" style="font-size: 24px;">
+                    <%= _locals.setting.ADMIN_WEB_NAME %>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--login-->
+<div class="admin-login">
+    <div class="admin-login-wrap">
+        <div class="admin-login-right">
+            <div class="layui-tab layui-tab-card" style="background: #FFF;">
+                <ul class="layui-tab-title" style="border-bottom: none;">
+                    <li class="layui-this">用户账号登录</li>
+                    <!--<li>用户快捷登录</li>-->
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show" id="login_panel">
+                        <form class="layui-form layui-form-pane" style="margin: 27px 0 70px 0;">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width: 52px;"><i
+                                        class="fa fa-user-md" style="font-size:18px;color: #CBCBCB;"></i></label>
+                                <div class="layui-input-inline" style="width: 266px;margin-right: 0;">
+                                    <input type="text" name="username" lay-verify="required" placeholder="账号"
+                                           autocomplete="off" class="layui-input"
+                                           style="padding-right: 10px;line-height: 36px;">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width: 52px;"><i
+                                        class="fa fa-expeditedssl" style="font-size:18px;color: #CBCBCB;"></i></label>
+                                <div class="layui-input-inline" style="width: 266px;margin-right: 0;">
+                                    <input type="password" name="password" placeholder="请输入密码" autocomplete="off"
+                                           class="layui-input" style="padding-right: 10px;line-height: 36px;">
+                                </div>
+                            </div>
+                            <div class="layui-form-item" style="height: 20px;">
+                                <label class="remember-account-box">
+                                    <!--<input type="checkbox" value=""-->
+                                           <!--style="display: block;float: left;margin-top: 3px;margin-right: 5px;"/>-->
+                                    <!--<span class="common-info remember-account" style="float: left;">记住账号</span>-->
+                                </label>
+                                <!--<a href="javascript:;" class="common-info forget-password">忘记密码？</a>-->
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block" style="text-align: center;margin: 0;">
+                                    <button class="layui-btn" id="login_btn">立即提交</button>
+                                </div>
+                            </div>
+                            <div class="layui-form-item" style="text-align: center;">
+                                <!--<a href="register.html" class="admin-account-register">还没账号？免费注册</a>-->
+                            </div>
+                        </form>
+                    </div>
+                    <!--<div class="layui-tab-item">Other login page</div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/layui.js"></script>
+<script>
+    layui.config({
+        base: '/<%= _locals.setting.__JAVASCRIPT__ %>/webapp/admin/', //你的模块目录
+        debug: true
+    }).extend({
+        commonUtil: '../share/commonUtil',
+        logUtil: '../share/logUtil',
+        validationUtil: '../share/validationUtil',
+        ajaxUtil: '../share/ajaxUtil'
+    }).use('login'); //加载入口
+</script>
+</body>
+</html>

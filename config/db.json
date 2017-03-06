@@ -1,0 +1,47 @@
+{
+    "development": {
+        "username": "root",
+        "password": "erp_mysql_root",
+        "database": "think-admin",
+        "host": "115.28.165.188",
+        "dialect": "mysql",
+        "port": "3306",
+        "charset" : "utf8mb4",
+        "timezone" : "+08:00",
+        "output": "../models",
+        "additional": {
+            "timestamps": false,
+            "freezeTableName": true
+        }
+    },
+    "test": {
+        "username": "root",
+        "password": "erp_mysql_root",
+        "database": "think-admin",
+        "host": "115.28.165.188",
+        "dialect": "mysql",
+        "port": "3306",
+        "charset" : "utf8mb4",
+        "timezone" : "+08:00",
+        "output": "../models",
+        "additional": {
+            "timestamps": false,
+            "freezeTableName": true
+        }
+    },
+    "production": {
+        "username": "root",
+        "password": "erp_mysql_root",
+        "database": "think-admin",
+        "host": "115.28.165.188",
+        "dialect": "mysql",
+        "port": "3306",
+        "charset" : "utf8mb4",
+        "timezone" : "+08:00",
+        "output": "../models",
+        "additional": {
+            "timestamps": false,
+            "freezeTableName": true
+        }
+    }
+}

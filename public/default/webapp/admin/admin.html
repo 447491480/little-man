@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title><%= _locals.setting.ADMIN_WEB_NAME %>-首页</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" href="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/css/layui.css" media="all">
+    <link rel="stylesheet" href="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/css/global.css" media="all">
+    <link rel="stylesheet" href="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/css/modules/layer/default/layer.css" media="all">
+    <link rel="stylesheet" href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/nprogress/nprogress.css">
+    <link rel="stylesheet" href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/jqgrid/ui.jqgrid.css">
+    <link rel="stylesheet" href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/jquery.ui/jquery-ui-1.10.4.custom.min.css">
+    <link rel="stylesheet" href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/ztree/zTreeStyle/zTreeStyle.css">
+    <script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/nprogress/nprogress.js"></script>
+    <style>
+        body {
+            min-width: 580px;
+            overflow-y: hidden;
+        }
+
+        .admin-login-box {
+            display: inline-block;
+            width: auto;
+            height: 60px;
+            overflow: hidden;
+            margin-left: 32px;
+        }
+
+        .header-demo .layui-nav .layui-nav-item {
+            line-height: 60px;
+        }
+
+        .header-demo .layui-nav .layui-this:after, .header-demo .layui-nav-bar {
+            display: none;
+        }
+
+        .admin-header-user .layui-nav-more {
+            top: 28px;
+        }
+
+        .admin-header-user .layui-nav-mored {
+            top: 20px;
+        }
+
+        .admin-nav-card > .layui-tab-title .layui-this {
+            color: white;
+            background-color: #277CA7;
+        }
+
+        .layui-nav .layui-this:after, .layui-nav-bar {
+            background: #F17E30 !important;
+        }
+
+        .layui-tab-brief > .layui-tab-more li.layui-this:after, .layui-tab-brief > .layui-tab-title .layui-this:after {
+            border-bottom: 5px solid #fd7e2a;
+        }
+
+        .layui-tab-title li {
+            color: #000000;
+
+        }
+
+        .layui-tab-brief > .layui-tab-title .layui-this {
+            color: #fd7e2a;
+        }
+
+        .layui-table tr th, .layui-table tr td {
+            text-align: center;
+        }
+
+        .layui-table tr td:last-child {
+            color: #4988BE;
+            cursor: pointer;
+        }
+
+        .layui-nav-tree .layui-nav-item a:hover, .layui-nav-tree .layui-this > a {
+            background-color: #0A6A9B;
+        }
+
+        .layui-nav-itemed > a, .layui-nav-tree .layui-nav-title a, .layui-nav-tree .layui-nav-title a:hover {
+            background-color: #0F628E !important;
+        }
+
+        .layui-nav-tree .layui-nav-item a {
+            height: 40px;
+        }
+
+        .layui-nav-tree .layui-nav-item {
+            line-height: 40px;
+        }
+
+        .layui-tab-title .layui-this:after {
+            border-radius: 0;
+            border: none;
+        }
+
+        .layui-tab-card > .layui-tab-title .layui-this {
+            border: none;
+            background-color: #038FD8;
+            color: #fff;
+        }
+
+        .layui-tab-title li .layui-tab-close:hover {
+            background: #FD7E2C;
+        }
+
+        .admin-nav-card > .layui-tab-title {
+            border-bottom: 1px solid #038FD8;
+        }
+
+        .layui-nav-tree .layui-nav-more {
+            border-color: #fff transparent transparent;
+        }
+
+        .layui-nav-tree .layui-nav-mored, .layui-nav-itemed .layui-nav-more {
+            border-color: transparent transparent #fff;
+        }
+
+        .contain-title li {
+            height: 32px;
+            line-height: 32px;
+        }
+
+        .admin-nav-card > .layui-tab-title .layui-this:after {
+            height: 31px;
+        }
+
+        .layui-tab-card > .contain-title .layui-tab-bar {
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #c2c2c2;
+        }
+
+        .layui-nav-tree .layui-nav-child a {
+            color: #fff;
+        }
+
+        .layui-nav-tree .layui-nav-child, .layui-nav-tree .layui-nav-child a:hover {
+            color: #c2c2c2;
+        }
+
+        @media screen and (max-width: 750px) {
+            .layui-layout-admin .layui-side {
+                top: 0 !important;
+            }
+        }
+
+        .layui-body {
+            overflow-y: hidden;
+        }
+
+    </style>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header header header-demo" style="height:90px;border-bottom: 5px solid #038FD8;">
+        <!--头部-->
+        <div class="layui-main" style="margin:0;height: 59px;border-bottom: 1px solid #FD7E2C;">
+            <a href="javascript:;" class="admin-login-box">
+                <img src="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/images/logo.png" alt=""
+                     style="display: inline-block;float: left;height: 56px;">
+                <span style="display: block;float: left;line-height: 60px;margin-left: 10px;font-size: 18px;font-weight: bold;"><%= _locals.setting.ADMIN_WEB_NAME %></span>
+            </a>
+            <ul class="layui-nav" style="margin-right: 32px;">
+                <li class="layui-nav-item" style="margin: 0;">
+                    <a href="javascript:;" class="admin-header-user" style="font-size: 12px;color: #828080;">
+                        <span><%= account %></span>
+                    </a>
+                </li>
+                <li class="layui-nav-item" style="margin: 0;">
+                    <a href="/admin/page/logout" style="font-size: 12px;color: #828080;">退出</a>
+                </li>
+            </ul>
+        </div>
+
+        <!--tab切换-->
+        <div id="main_top_tab" data-index="<%= data.index_view %>" class="layui-tab layui-tab-card" style="margin:0; border: none;border-radius: 0;box-shadow: none;">
+            <ul class="layui-tab-title" style="border-bottom:none;height: 30px;background: #fff;" >
+                <% if(data.menus.length) { %>
+                    <% data.menus.forEach(function(menu, mi){ %>
+                    <li class="<% if(mi==0) { %>layui-this<% } %>" style="line-height: 30px;"><%= menu.title %></li>
+                    <% }) %>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+    <!--左侧-->
+    <div class="layui-side layui-bg-black" id="admin-side" style="top:95px;background: #038FD8;">
+        <div class="layui-side-scroll" id="admin-navbar-side" lay-filter="side">
+            <% if(data.menus.length) { %>
+            <% data.menus.forEach(function(menu, mi){ %>
+            <ul data-title="<%= menu.title %>" class="layui-nav layui-nav-tree admin-nav-tree left-top-nav" style="background: #038FD8;<% if(mi!=0) { %>display: none;<% } %>">
+                <% if(menu.nav_menu.length) { %>
+                <% menu.nav_menu.forEach(function(nav_item, ni){ %>
+                    <li class="layui-nav-item <% if(true) { %>layui-nav-itemed<% } %>">
+                        <a href="javascript:;" style="color: #fff;"><%= nav_item.title %></a>
+
+                        <% if(nav_item.third_menu.length) { %>
+                        <% nav_item.third_menu.forEach(function(third, ti){ %>
+                            <dl class="layui-nav-child">
+                                <dd>
+                                    <a href="javascript:;" data-url="<%= third.view %>">
+                                        <cite><%= third.title %></cite>
+                                    </a>
+                                </dd>
+                            </dl>
+                        <% }) %>
+                        <% } %>
+                    </li>
+                <% }) %>
+                <% } %>
+            </ul>
+            <% }) %>
+            <% } %>
+        </div>
+    </div>
+    <!--右侧内容-->
+    <div class="layui-body" style="top:95px;bottom: 0;" id="admin-body">
+        <div class="layui-tab layui-tab-card admin-nav-card" lay-filter="admin-tab" style="border-radius: 0;">
+            <ul class="layui-tab-title contain-title" id="admin-tab" style="background: #FFF;color: #000;height: auto;">
+                <li class="layui-this" style="height: 32px;">
+                    <cite>首页</cite>
+                </li>
+            </ul>
+            <div class="layui-tab-content" style="min-height: 150px;overflow: hidden;overflow-y: auto;"
+                 id="admin-tab-container">
+                <div id="home_page" class="layui-tab-item layui-show">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--屏幕小的时候  遮罩-->
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon">&#xe602;</i>
+    </div>
+    <div class="site-mobile-shade"></div>
+</div>
+
+<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/jquery/jquery.min.js"></script>
+<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/ztree/jquery.ztree.all.min.js"></script>
+<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/arttemplate/template.js"></script>
+<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/jqgrid/grid.locale-cn.js"></script>
+<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/jqgrid/jqgrid.sub.min.js"></script>
+<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/jquery.ui/jquery-ui-1.10.4.custom.min.js"></script>
+<script src="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/layui.js"></script>
+
+<script>
+    layui.config({
+        base: '/<%= _locals.setting.__JAVASCRIPT__ %>/webapp/admin/', //你的模块目录
+        debug:true
+    }).extend({
+        commonUtil:'../share/commonUtil',
+        logUtil:'../share/logUtil',
+        validationUtil:'../share/validationUtil',
+        ajaxUtil:'../share/ajaxUtil'
+    }).use('admin'); //加载入口
+</script>
+</body>
+</html>

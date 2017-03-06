@@ -1,0 +1,18 @@
+index_view: page/index.html                                   #-------首页视图模板
+menus:
+ - title: 组件演示
+   nav_menu:
+    - title: 基本元素
+      third_menu:
+       - {title: 按钮组,view: page/biz/buttons.html,icon: ''}
+    - title: 官方组件
+      third_menu:
+       - {title: 日期时间选择,view: page/biz/datetime.html,icon: ''}
+ - title: 系统
+   nav_menu:
+    - title: 后台账号管理
+      third_menu:
+       - {title: 用户管理,view: page/system/admin_user_mgr.html,icon: ''}
+    - title: 个人中心
+      third_menu:
+       - {title: 修改密码,view: page/system/admin_reset_password.html,icon: ''}

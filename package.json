@@ -1,0 +1,54 @@
+{
+  "name": "little-man",
+  "version": "0.0.1",
+  "author": "yoursfengzhilian",
+  "description": "node.js mvc base express",
+  "keywords": [
+    "little-man",
+    "monk-node"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://git.oschina.net/yourschang/little-man.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "NODE_ENV=test pm2 start app.js --watch --node-args='--harmony' --name 'little-man'",
+    "start": "NODE_ENV=prod pm2 start app.js -i max --node-args='--harmony' --name 'little-man'"
+  },
+  "dependencies": {
+    "asyncawait": "^1.0.6",
+    "body-parser": "^1.16.0",
+    "connect-flash": "^0.1.1",
+    "connect-multiparty": "^2.0.0",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.1",
+    "csurf": "^1.9.0",
+    "debug": "^2.6.0",
+    "ejs": "^2.5.5",
+    "express": "^4.14.0",
+    "express-session": "^1.15.0",
+    "file-stream-rotator": "^0.0.7",
+    "images": "^3.0.0",
+    "lodash": "^4.17.4",
+    "log4js": "^1.1.0",
+    "md5": "^2.2.1",
+    "moment": "^2.17.1",
+    "more-express-config": "^1.0.8",
+    "morgan": "^1.8.0",
+    "multer": "^1.2.1",
+    "mysql": "^2.13.0",
+    "node-schedule": "^1.2.0",
+    "nodemailer": "^3.0.2",
+    "redis": "^2.6.3",
+    "request": "^2.79.0",
+    "sequelize": "^3.30.2",
+    "sequelize-auto": "^0.4.18",
+    "serve-favicon": "^2.3.2",
+    "session-file-store": "^1.0.0",
+    "socket.io": "^1.7.2",
+    "utf8": "^2.1.2",
+    "uuid": "^3.0.1",
+    "zengming": "^0.1.4"
+  }
+}

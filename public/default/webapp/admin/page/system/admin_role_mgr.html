@@ -1,0 +1,303 @@
+<div id="admin_role_list_panel">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+        <legend>角色列表</legend>
+    </fieldset>
+
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>角色名称</th>
+            <!--<th>角色代码</th>-->
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <div id="admin_role_pager"></div>
+</div>
+
+<div id="admin_role_edit_panel" style="display: none;">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+        <legend>修改角色权限</legend>
+    </fieldset>
+
+    <blockquote class="layui-elem-quote">
+        <div>
+            <button class="layui-btn layui-btn-small"><i class="layui-icon">&#xe603;</i> 返回角色列表</button>
+        </div>
+    </blockquote>
+
+    <form class="layui-form layui-form-pane" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色</label>
+            <div class="layui-input-inline">
+                <input disabled="disabled" type="text" name="account" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">菜单权限</label>
+            <div class="layui-input-block">
+                <ul id="admin_role_menu_tree" class="ztree" style="height: 200px;overflow-y: scroll;border-right: 1px solid #e6e6e6;border-left: 1px solid #e6e6e6;border-bottom: 1px solid #e6e6e6;">
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="admin_role_edit_confirm">立即提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/html" id="tpl_admin_role_list">
+    {{each data as item i}}
+    <tr>
+        <td>{{item.RoleName}}</td>
+        <!--<td>{{item.RoleCode}}</td>-->
+        <td><span class="admin-role-modify" data-i="{{i}}">修改权限</span></td>
+    </tr>
+    {{/each}}
+</script>
+
+<script>
+    layui.use(['laypage','form'], function(){
+        var laypage = layui.laypage;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var ajaxUtil = layui.ajaxUtil;
+        var form = layui.form();
+        var commonUtil = layui.commonUtil;
+
+        var ctrl = {};
+        ctrl.admin_role_mgr_ctrl_panel = $('#admin_role_mgr_ctrl_panel');
+        ctrl.admin_role_list_panel = $('#admin_role_list_panel');
+        ctrl.admin_role_edit_panel = $('#admin_role_edit_panel');
+        ctrl.admin_role_search_panel = $('#admin_role_search_panel');
+        ctrl.admin_role_list_table = ctrl.admin_role_list_panel.find('tbody:eq(0)');
+
+        var urls = {};
+        urls.get_menu = '/admin/menu/get-menu';
+        urls.get_page_part = '/admin/page/get-part';
+        urls.admin_role_save = '/admin/role/role-modify';
+        urls.admin_role_query = '/admin/role/role-list';
+
+        var G = {};
+        G.ROLELIST_DATA = null;
+
+        var M = {};
+        M.CURRENT_SELECTED = null;
+        M.MODIFY_STATUS = false;
+
+        var setting = {
+            view: {
+                selectedMulti: false
+            },
+            check: {
+                enable: true,
+                chkboxType: {"Y":"ps", "N":"ps"}
+            },
+
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+
+        function initTreeList(data) {
+            var def = $.Deferred();
+
+            var compareNodes = null;
+
+            if(data) {
+                if(!data.Rights) {
+                    data.Rights = '[]';
+                }
+
+                compareNodes = JSON.parse(decodeURIComponent(data.Rights));
+            }
+
+            ajaxUtil.doAjaxGet(urls.get_menu,null).done(function(ret) {
+                if(ret.status == 0) {
+                    var nodes = [];
+
+                    var menus = ret.data.menus;
+                    layui.each(menus,function(i,menuObj) {
+
+                        var tempMain = {};
+                        tempMain.name = menuObj.title;
+
+                        tempMain.children = [];
+                        layui.each(menuObj.nav_menu,function(i,navObj) {
+                            var tempNav = {};
+                            tempNav.name = navObj.title;
+                            tempNav.children = [];
+
+                            layui.each(navObj.third_menu,function(i,thirdObj) {
+                                var tempThird = {};
+                                tempThird.name = thirdObj.title;
+                                tempThird.title = thirdObj.title;
+                                tempThird.view = thirdObj.view;
+
+                                if(data) {
+                                    layui.each(compareNodes,function(i,compNode) {
+                                        if(tempThird.name == compNode.title && tempThird.view == compNode.view && compNode.level == 2) {
+                                            tempThird.checked = true;
+                                        }
+                                    });
+
+                                    if(data.Type == 0) {
+                                        tempThird.checked = true;
+                                        tempThird.chkDisabled  = true;
+                                    }
+                                }
+
+                                tempNav.children.push(tempThird);
+                            });
+
+                            if(data) {
+                                layui.each(compareNodes,function(i,compNode) {
+                                    if(tempNav.name == compNode.title && tempNav.view == compNode.view && compNode.level == 1) {
+                                        tempNav.checked = true;
+                                    }
+                                });
+
+                                if(data.Type == 0) {
+                                    tempNav.checked = true;
+                                    tempNav.chkDisabled  = true;
+                                }
+                            }
+
+                            tempMain.children.push(tempNav);
+                        });
+
+                        if(data) {
+                            layui.each(compareNodes,function(i,compNode) {
+                                if(tempMain.name == compNode.title && tempMain.view == compNode.view && compNode.level == 0) {
+                                    tempMain.checked = true;
+                                }
+                            });
+
+                            if(data.Type == 0) {
+                                tempMain.checked = true;
+                                tempMain.chkDisabled  = true;
+                            }
+                        }
+
+                        nodes.push(tempMain);
+                    });
+
+                    $.fn.zTree.init($("#admin_role_menu_tree"), setting,nodes);
+                }
+
+                def.resolve();
+            });
+
+            return def.promise();
+        }
+
+        function showAdminRoleEditPanel() {
+            ctrl.admin_role_edit_panel.show();
+            ctrl.admin_role_list_panel.hide();
+        }
+
+        function showAdminRoleListPanel() {
+            ctrl.admin_role_edit_panel.hide();
+            ctrl.admin_role_list_panel.show();
+        }
+
+        function genAdminRoleList() {
+            ajaxUtil.doAjaxGet(urls.admin_role_query,{}).done(function(ret) {
+                if(ret.status == 0) {
+                    ctrl.admin_role_list_table.empty();
+
+                    G.ROLELIST_DATA = ret.data;
+                    ctrl.admin_role_list_table.append(template('tpl_admin_role_list',ret));
+                }
+            });
+        }
+
+        function bindEvent() {
+            // 点击添加
+            ctrl.admin_role_mgr_ctrl_panel.find('button:eq(0)').bind('click',function() {
+                initTreeList();
+                showAdminRoleEditPanel();
+
+                M.CURRENT_SELECTED = null;
+                M.MODIFY_STATUS = false;
+
+                $('#admin_role_edit_panel').find('button:eq(-1)').trigger('click');
+            });
+
+            //监听提交
+            form.on('submit(admin_role_edit_confirm)', function(data){
+                var args = {};
+                var rights = [];
+
+                var zTree = $.fn.zTree.getZTreeObj("admin_role_menu_tree");
+
+                var checkedNodes = zTree.getCheckedNodes(true);
+
+                layui.each(checkedNodes,function(i,nodesObj) {
+//                    if(nodesObj.view !== undefined) {
+                        var temp = {};
+                        temp.title = nodesObj.name;
+                        temp.view = nodesObj.view;
+                        temp.level = nodesObj.level;
+
+                        rights.push(temp);
+//                    }
+                });
+
+                args.Rights = JSON.stringify(rights);
+
+                if(M.MODIFY_STATUS == true) {
+                    args.Id = M.CURRENT_SELECTED.Id;
+                }
+
+                ajaxUtil.doAjaxPost(urls.admin_role_save,args).done(function(ret) {
+                    commonUtil.toast(ret.msg);
+                    if(ret.status == 0) {
+                        $('#admin_role_edit_panel').find('button:eq(0)').trigger('click');
+                        genAdminRoleList();
+                    }
+                });
+                return false;
+            });
+
+            // 返回
+            $('#admin_role_edit_panel').find('button:eq(0)').bind('click',function() {
+                showAdminRoleListPanel();
+                return false;
+            });
+
+            // 修改
+            ctrl.admin_role_list_table.on({
+                'click':function() {
+                    var data = G.ROLELIST_DATA[$(this).data('i')];
+
+                    M.CURRENT_SELECTED = data;
+                    M.MODIFY_STATUS = true;
+
+                    showAdminRoleEditPanel();
+                    ctrl.admin_role_edit_panel.find('input:eq(0)').val(data.RoleName);
+                    initTreeList(data);
+                }
+            },'.admin-role-modify');
+
+
+        }
+
+
+        (function(){
+            bindEvent();
+
+            genAdminRoleList();
+        })();
+    });
+</script>

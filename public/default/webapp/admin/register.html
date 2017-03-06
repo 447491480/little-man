@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= _locals.setting.ADMIN_WEB_NAME %>-注册</title>
+    <link rel="stylesheet" href="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/css/layui.css">
+    <link rel="stylesheet" href="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/css/register.css">
+</head>
+<body>
+<div class="admin-register">
+    <div class="admin-register-wrap">
+        <!--头部-->
+        <div class="register-header">
+            <img src="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/images/logo.png" alt="" width="211" height="63">
+        </div>
+        <!--register-->
+        <div class="register-con">
+             <div class="user-register-box">
+                 <span class="user-register">用戶注冊</span>
+             </div>
+            <form class="layui-form layui-form-pane" action="" style="width: 282px;margin: 0 auto;padding: 50px 0 54px 0">
+                <div class="layui-form-item">
+                    <input type="tel" name="phone" required  lay-verify="phone" placeholder="请输入手机号码" autocomplete="off" class="layui-input" style="height: 44px;line-height: 44px;border-radius: 3px;font-size: 15px;color: #282828;">
+                </div>
+                <div class="layui-form-item" style="margin-bottom: 32px;position: relative;">
+                    <input type="text" name="identify" required  lay-verify="identify" placeholder="图片验证码" autocomplete="off" class="layui-input" style="height: 44px;line-height: 44px;border-radius: 3px;font-size: 15px;color: #282828;padding-right: 114px;">
+                    <img src="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/images/yzm.png" alt="" class="pic-yzm">
+                </div>
+                <div class="layui-form-item" style="margin-bottom: 22px;">
+                    <div class="layui-input-block" style="text-align: center;margin: 0;">
+                        <button class="layui-btn register">立即注册</button>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <a href="login.html" class="return-login">已有账号？返回登录</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
