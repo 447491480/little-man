@@ -1,0 +1,591 @@
+<div id="biz_member_list_panel">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+        <legend>客户列表</legend>
+    </fieldset>
+
+    <blockquote class="layui-elem-quote">
+        <div>
+            <button class="layui-btn layui-btn-small"><i class="layui-icon">&#xe608;</i> 新增</button>
+        </div>
+    </blockquote>
+
+    <div class="layui-input-inline ">
+        <input type="text" lay-verify="required" placeholder="客户名称" autocomplete="off" align="right"
+               class="layui-input">
+    </div>
+    <button class="layui-btn "> 查询</button>
+
+    <div style="margin-top: 10px;">
+        <table id="biz_relation_list_grid" class="jqgrid-table"></table>
+        <div id="biz_relation_list_grid_pager"></div>
+    </div>
+</div>
+
+<div id="biz_member_select_custom_panel" style="display: none;">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+        <legend>选择客户</legend>
+    </fieldset>
+
+    <blockquote class="layui-elem-quote">
+        <div>
+            <button class="layui-btn layui-btn-small"><i class="layui-icon">&#xe603;</i> 返回客户列表</button>
+        </div>
+    </blockquote>
+    <div class="layui-input-inline ">
+        <input type="text" lay-verify="required" placeholder="客户名称" autocomplete="off" align="right"
+               class="layui-input">
+    </div>
+    <button class="layui-btn "> 查询</button>
+
+    <div style="margin-top: 10px;margin-bottom: 10px;">
+        <table id="biz_member_list_grid" class="jqgrid-table"></table>
+        <div id="biz_member_list_grid_pager"></div>
+    </div>
+</div>
+
+<div id="biz_member_edit_panel" style="display: none;">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+        <legend>选择客户</legend>
+    </fieldset>
+
+    <blockquote class="layui-elem-quote">
+        <div>
+            <button class="layui-btn layui-btn-small"><i class="layui-icon">&#xe603;</i> 返回客户列表</button>
+        </div>
+    </blockquote>
+    <form class="layui-form layui-form-pane" action="javascript:;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">客户名称</label>
+            <div class="layui-input-inline">
+                <input type="text" lay-verify="required" name="MemberName" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">客户角色</label>
+            <div class="layui-input-inline">
+                <select name="RoleId">
+                    <option></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">地址</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Address" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">地区</label>
+            <div class="layui-input-block">
+                <ul id = "biz_member_region_tree" lay-verify = "regionTree" class="ztree" style="height: 200px;overflow-y: scroll;
+                border-right: 1px solid #e6e6e6;border-left: 1px solid #e6e6e6;border-bottom: 1px solid #e6e6e6;">
+                </ul>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">部门</label>
+            <div class="layui-input-inline">
+                <input type="text" lay-verify = "required" name="MemberBU" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号</label>
+            <div class="layui-input-inline">
+                <input type="text" lay-verify="required" name="MemberAccount" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">默认密码</label>
+            <div class="layui-input-inline">
+                <input type="text" name="DefaultPassword" autocomplete="off" class="layui-input" disabled = "disabled" value = "111111">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="biz_member_edit_confirm" onclick="return false">
+                    立即提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    layui.use(['commonUtil', 'form', 'ajaxUtil','validationUtil'], function () {
+        var commonUtil = layui.commonUtil;
+        var form = layui.form();
+        var ajaxUtil = layui.ajaxUtil;
+        var validationUtil = layui.validationUtil;
+
+        var urls = {};
+        urls.biz_member_query = '/admin/user/query-all';
+        urls.biz_member_save = '/admin/user/save';
+        urls.biz_member_delete = '/admin/user/delete';
+        urls.biz_member_relation = '/admin/user/relation';
+        urls.admin_role_query = '/admin/role/role-list';
+        urls.biz_relation_set_payment = '/admin/user/set-payment-days';
+
+        urls.biz_relation_query = '/admin/user/relation-list';
+        urls.biz_relation_delete = '/admin/user/relation-delete';
+
+        urls.biz_region_query = '/admin/tree/nodes-query';
+
+        var controls = {};
+        controls.biz_member_list_panel = $('#biz_member_list_panel');
+        controls.biz_member_select_custom_panel = $('#biz_member_select_custom_panel');
+        controls.biz_member_edit_panel = $('#biz_member_edit_panel');
+
+        var M = {};
+        M.MODIFY_STATUS = false;
+        M.DATA = null;
+
+        var settingRegion = {
+            check: {
+                enable: true,
+                chkStyle:"radio",
+                radioType: "all"
+            },
+            view: {
+                dbClickExpand: false
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+
+        function init() {
+            bindEvent();
+            loadMemberData();
+            loadRelationData();
+        }
+
+        function bindEvent() {
+            //自定义验证规则
+            form.verify({
+                price: [/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/, '请输入小数'],
+                regionTree: function () {
+                    var treeObj = $.fn.zTree.getZTreeObj("#biz_member_region_tree");
+                    var nodes = treeObj.getCheckedNodes(true);
+                    if (!nodes)
+                    {
+                        return '请选择一个区域';
+                    }
+                }
+            });
+
+            // 监听提交
+            form.on('submit(biz_member_edit_confirm)', function (data) {
+                var args = data.field;
+
+                var zTreeDepartment = $.fn.zTree.getZTreeObj("biz_region_department_tree");
+                var checkedDepartmentNodes = zTreeDepartment.getCheckedNodes(true);
+                var temp = null;
+                layui.each(checkedDepartmentNodes,function(i,nodesObj) {
+                    if(nodesObj.checked == true) {
+                        temp = nodesObj.name;
+                    }
+                });
+                if(temp) {
+                    args.MemberArea = temp;
+                }
+
+                if (M.MODIFY_STATUS) {
+                    args.id = M.DATA.Id;
+                }
+
+                ajaxUtil.doAjaxPost(urls.biz_member_save, args).done(function (ret) {
+                    commonUtil.toast(ret.msg);
+
+                    if (ret.status == 0) {
+                        controls.biz_member_edit_panel.find('button:eq(0)').trigger('click');
+
+                        refreshRelation();
+                    }
+                });
+
+                return false;
+            });
+
+            // 点击增加
+            controls.biz_member_list_panel.find('button:eq(0)').bind('click', function () {
+                var confirmLayer = layer.confirm('选择增加方式', {
+                    btn: ['自己创建', '从已有客户中选择', '取消'] //按钮
+                }, function () {
+                    layer.close(confirmLayer);
+                    showAddPanel();
+                    $.when(initRoleSelect()).done(function(ret){
+                        var selector = controls.biz_member_edit_panel.find('select:eq(0)');
+
+                        selector.empty();
+                        layui.each(ret.data, function (i, o) {
+                            selector.append('<option value="' + o.Id + '">' + o.RoleName + '</option>');
+                        });
+                        initRegionTreeList();
+                        form.render();
+                    })
+                }, function () {
+                    showEditPanel();
+                    refresh();
+                }, function () {
+                });
+            });
+
+            //搜索
+            controls.biz_member_list_panel.find('button:eq(1)').bind('click', function () {
+                var key = controls.biz_member_list_panel.find('input[type=text]:eq(0)');
+                var args = {};
+                args.keyword = key.val();
+                refreshRelation(args);
+            });
+
+            // 删除
+            $("#biz_relation_list_grid").on({
+                'click': function () {
+                    var data = JSON.parse(decodeURIComponent($(this).data('relation')));
+
+                    var confirmLayer = layer.confirm('确定删除？', {
+                        btn: ['确定', '取消'] //按钮
+                    }, function () {
+                        layer.close(confirmLayer);
+                        ajaxUtil.doAjaxGet(urls.biz_relation_delete, {'id': data.Id}).done(function (ret) {
+                            commonUtil.toast(ret.msg);
+                            if (ret.status == 0) {
+                                refreshRelation();
+                            }
+                        });
+                    }, function () {
+                    });
+                }
+            }, '.biz-relation-delete');
+
+            $("#biz_relation_list_grid").on({
+                'click': function () {
+                    var data = JSON.parse(decodeURIComponent($(this).data('relation')));
+
+                    layer.prompt({title: '请输入账期（单位：天）', formType: 0}, function (days, index) {
+                        if(!validationUtil.isPositiveWholeNumber(days)) {
+                            return commonUtil.toast('请输入正整数');
+                        }
+
+                        layer.close(index);
+                        ajaxUtil.doAjaxGet(urls.biz_relation_set_payment, {days: days, id: data.Id}).done(function (ret) {
+                            commonUtil.toast(ret.msg);
+                            refreshRelation()
+                        })
+                    });
+                }
+            }, '.biz-relation-set');
+
+            // 点击返回
+            controls.biz_member_select_custom_panel.find('button:eq(0)').bind('click', function () {
+                showListPanel();
+            });
+
+            // 自建商品点击返回
+            controls.biz_member_edit_panel.find('button:eq(0)').bind('click',function(){
+                showListPanel();
+            });
+
+            // 查询我的客户
+            controls.biz_member_select_custom_panel.find('button:eq(1)').bind('click', function () {
+                var keyword = $.trim(controls.biz_member_select_custom_panel.find('input[type=text]:eq(0)').val());
+                refresh({keyword: keyword});
+            });
+
+            // 修改
+            $("#biz_member_list_grid").on({
+                'click': function () {
+                    var data = JSON.parse(decodeURIComponent($(this).data('member')));
+
+                    showEditPanel();
+                    controls.biz_member_select_custom_panel.find('input:eq(0)').val(data.MemberName);
+
+                    controls.biz_member_select_custom_panel.find('select:eq(0)').val(data.RoleId);
+
+                    controls.biz_member_select_custom_panel.find('input:eq(2)').val(data.Address);
+                    controls.biz_member_select_custom_panel.find('input:eq(3)').val(data.MemberArea);
+                    controls.biz_member_select_custom_panel.find('input:eq(4)').val(data.MemberBU);
+                    controls.biz_member_select_custom_panel.find('input:eq(5)').val(data.member.MemberAccount);
+
+                    controls.biz_member_select_custom_panel.find('input:eq(5)').attr('disabled', 'disabled');
+
+                    form.render();
+
+                    M.MODIFY_STATUS = true;
+                    M.DATA = data;
+                }
+            }, '.biz-member-modify');
+
+            // 删除
+            $("#biz_member_list_grid").on({
+                'click': function () {
+                    var data = JSON.parse(decodeURIComponent($(this).data('member')));
+
+                    var confirmLayer = layer.confirm('确定删除？', {
+                        btn: ['确定', '取消'] //按钮
+                    }, function () {
+                        layer.close(confirmLayer);
+                        ajaxUtil.doAjaxGet(urls.biz_member_delete, {'id': data.Id}).done(function (ret) {
+                            commonUtil.toast(ret.msg);
+                            if (ret.status == 0) {
+                                refresh();
+                            }
+                        });
+                    }, function () {
+                    });
+                }
+            }, '.biz-member-delete');
+
+            // 设为下级
+            $("#biz_member_list_grid").on({
+                'click': function () {
+                    var data = JSON.parse(decodeURIComponent($(this).data('member')));
+
+                    ajaxUtil.doAjaxGet(urls.biz_member_relation, {'sid': data.Id}).done(function (ret) {
+                        commonUtil.toast(ret.msg);
+                        if (ret.status == 0) {
+                            refreshRelation();
+                        }
+                    });
+
+                }
+            }, '.biz-member-relation');
+        }
+
+        function initRoleSelect() {
+            var def = $.Deferred();
+            ajaxUtil.doAjaxGet(urls.admin_role_query, {type:1}).done(function (ret) {
+                def.resolve(ret);
+            });
+
+            return def.promise();
+        }
+
+        function initRegionTreeList() {
+            ajaxUtil.doAjaxGet(urls.biz_region_query, {type:0}).done(function (ret) {
+                if (ret.status != 0) {
+                    commonUtil.toast('初始化列表失败');
+                    return;
+                }
+                var node = null;
+                var nodes = ret.data;
+                if(nodes) {
+                    nodes[0].checked = true;
+                }
+                for (var i = 0; i < nodes.length; i++) {
+                    nodes[i].name = nodes[i].Name;
+                    nodes[i].id = nodes[i].Id;
+                    nodes[i].pId = nodes[i].ParentId;
+                }
+                $.fn.zTree.init($("#biz_member_region_tree"), settingRegion, nodes);
+            });
+        }
+
+        function showEditPanel() {
+            controls.biz_member_select_custom_panel.show();
+            controls.biz_member_list_panel.hide();
+            controls.biz_member_edit_panel.hide();
+        }
+
+        function showListPanel() {
+            controls.biz_member_select_custom_panel.hide();
+            controls.biz_member_list_panel.show();
+            controls.biz_member_edit_panel.hide();
+        }
+
+        function showAddPanel() {
+            controls.biz_member_select_custom_panel.hide();
+            controls.biz_member_list_panel.hide();
+            controls.biz_member_edit_panel.show();
+        }
+
+        function refreshRelation(data) {
+            data = data || {};
+            var page = $("#biz_relation_list_grid").getGridParam('page'); // current page
+            var rows = $("#biz_relation_list_grid").getGridParam('rows'); // rows
+            $("#biz_relation_list_grid").jqGrid('setGridParam', {
+                page: page,
+                rows: rows,
+                postData: data
+            }).trigger("reloadGrid");
+        }
+
+        function refresh(data) {
+            data = data || {};
+            var page = $("#biz_member_list_grid").getGridParam('page'); // current page
+            var rows = $("#biz_member_list_grid").getGridParam('rows'); // rows
+            $("#biz_member_list_grid").jqGrid('setGridParam', {
+                page: page,
+                rows: rows,
+                postData: data
+            }).trigger("reloadGrid")
+        }
+
+        function loadMemberData() {
+            $("#biz_member_list_grid").jqGrid({
+                colModel: [
+                    {label: '客户名称', name: 'MemberName', align: 'center'},
+                    {
+                        label: '客户角色',
+                        name: 'RoleId',
+                        align: 'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            return rowObject.role.RoleName;
+                        }
+                    },
+                    {label: '地址', name: 'Address', align: 'center'},
+                    {label: '地区', name: 'MemberArea', align: 'center'},
+                    {label: '部门', name: 'MemberBU', align: 'center'},
+                    {
+                        label: '主账号',
+                        name: 'MemberAccount',
+                        align: 'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            return rowObject.member.MemberAccount;
+                        }
+                    },
+                    {label: '总积分', name: 'Points', align: 'center'},
+                    {label: '总资产', name: 'Asset', align: 'center'},
+                    {
+                        label: '创建时间',
+                        name: 'CreateTime',
+                        align: 'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            return commonUtil.getTimeString(cellValue);
+                        }
+                    },
+                    {
+                        label: '操作',
+                        align: 'center',
+                        width: '210',
+                        formatter: function (cellValue, options, rowObject) {
+                            var _dom =
+//                              '<span data-member="'+encodeURIComponent(JSON.stringify(rowObject))+'" href="javascript:;" class="my-grid-a-span biz-member-relation">设为下级</span>/<span data-member="'+encodeURIComponent(JSON.stringify(rowObject))+'" href="javascript:;" class="my-grid-a-span biz-member-modify">修改</span>/<span data-member="'+encodeURIComponent(JSON.stringify(rowObject))+'" href="javascript:;" class="my-grid-a-span biz-member-delete">删除</span>';
+                                '<span data-member="' + encodeURIComponent(JSON.stringify(rowObject)) + '" href="javascript:;" class="my-grid-a-span biz-member-relation">设为我的客户</span>';
+
+                            return _dom;
+                        }
+                    }
+                ],
+                datatype: 'json',
+                url: urls.biz_member_query,
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                viewrecords: true, // show the current page, data rang and total records on the toolbar
+                height: true,
+                fitColumns: true,
+                width: true,
+                autowidth: true,
+                shrinkToFit: true,
+                ajaxGridOptions: {
+                    dataFilter: function (ret) {
+                        var retObj = JSON.parse(ret);
+                        if (retObj.status == 0) {
+                            return JSON.stringify(retObj.data);
+                        } else {
+                            commonUtil.toast(retObj.msg);
+                        }
+                    }
+                },
+                pager: "#biz_member_list_grid_pager"
+            });
+
+            // 初始化宽宽，用于自适应宽度
+            $("#biz_member_list_grid").setGridWidth($("#admin-tab-container").width() - 10, true);
+        }
+
+        function loadRelationData() {
+            $("#biz_relation_list_grid").jqGrid({
+                colModel: [
+                    {
+                        label: '客户名称',
+                        name: 'MemberName',
+                        align: 'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            return rowObject.shop.MemberName;
+                        }
+                    },
+                    {
+                        label: '地址',
+                        name: 'Address',
+                        align: 'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            return commonUtil.filter(rowObject.shop.Address);
+                        }
+                    },
+                    {
+                        label: '地区',
+                        name: 'MemberArea',
+                        align: 'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            return commonUtil.filter(rowObject.shop.MemberArea);
+                        }
+                    },
+                    {
+                        label: '账期',
+                        name: 'PaymentDays',
+                        align: 'center'
+                    },
+                    {
+                        label: '总积分',
+                        name: 'Points',
+                        align: 'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            return rowObject.shop.Points;
+                        }
+                    },
+                    {
+                        label: '总资产',
+                        name: 'Asset',
+                        align: 'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            return rowObject.shop.Asset;
+                        }
+                    },
+                    {
+                        label: '操作', align: 'center', formatter: function (cellValue, options, rowObject) {
+                        var _dom =
+                            '<span data-relation="' + encodeURIComponent(JSON.stringify(rowObject)) + '" href="javascript:;" class="my-grid-a-span biz-relation-set">设置账期</span>&nbsp;&nbsp;' +
+                            '<span data-relation="' + encodeURIComponent(JSON.stringify(rowObject)) + '" href="javascript:;" class="my-grid-a-span biz-relation-delete">删除</span>';
+
+                        return _dom;
+                    }
+                    }
+                ],
+                datatype: 'json',
+                url: urls.biz_relation_query,
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                viewrecords: true, // show the current page, data rang and total records on the toolbar
+                height: true,
+                fitColumns: true,
+                width: true,
+                autowidth: true,
+                shrinkToFit: true,
+                ajaxGridOptions: {
+                    dataFilter: function (ret) {
+                        var retObj = JSON.parse(ret);
+                        if (retObj.status == 0) {
+                            return JSON.stringify(retObj.data);
+                        } else {
+                            commonUtil.toast(retObj.msg);
+                        }
+                    }
+                },
+                pager: "#biz_relation_list_grid_pager"
+            });
+
+            // 初始化宽宽，用于自适应宽度
+            $("#biz_relation_list_grid").setGridWidth($("#admin-tab-container").width() - 10, true);
+        }
+
+
+        (function () {
+            init();
+        })();
+    });
+</script>

@@ -1,8 +1,8 @@
-var path = require("path");
+var configure = require('more-express-config');
 var log4js = require("log4js");
 
 exports.configure = function() {
-    log4js.configure(path.join(__dirname, '../config/', 'log4js.json'));
+    log4js.configure(configure.get('log4js'));
 };
 
 exports.logger = function(name) {

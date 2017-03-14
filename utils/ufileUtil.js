@@ -17,7 +17,7 @@ var ContentMD5 = "";
 
 var MyDate = "";
 var CanonicalizedUCloudHeaders = "";
-var bucket = "qiaqia";
+var bucket = "qiaqiavip";
 
 
 function Base64(content) {

@@ -31,6 +31,7 @@ layui.define(['form','element', 'layer', 'ajaxUtil', 'logUtil', 'commonUtil'], f
         bindEvent();
         initIndex();
         updateSession();
+        $('#main_top_tab').find('li:eq(0)').trigger('click');
     }
 
     function initIndex() {

@@ -1,0 +1,121 @@
+<blockquote class="layui-elem-quote">交易数据统计</blockquote>
+
+<div class="layui-tab layui-tab-brief" lay-filter="report_sell_status_filter">
+    <ul class="layui-tab-title">
+        <li data-status="1" class="layui-this">近7天</li>
+        <li data-status="2">近1个月</li>
+        <li data-status="3">近3个月</li>
+    </ul>
+    <div class="layui-tab-content"></div>
+</div>
+
+<div id="biz_report_goods" style="width: 100%;height:400px;"></div>
+
+<script type="text/javascript">
+    layui.use(['commonUtil', 'ajaxUtil', 'element'], function () {
+        var commonUtil = layui.commonUtil;
+        var ajaxUtil = layui.ajaxUtil;
+        var element = layui.element();
+
+        var urls = {};
+        urls.biz_report_goods_sell = '/admin/report/goods-sell-report';
+
+        function init() {
+            bindEvent();
+            genCharts();
+        }
+
+        function getOrderSellReport(start,end) {
+            start = start ||  commonUtil.getDateString((new Date()).setDate((new Date()).getDate() - 7));
+            end = end || commonUtil.getDateString((new Date()).setDate((new Date()).getDate() + 1));
+            var def = $.Deferred();
+            var args = {};
+            args.startTime = start;
+            args.endTime = end;
+            ajaxUtil.doAjaxGet(urls.biz_report_goods_sell, args).done(function (ret) {
+                def.resolve(ret);
+            });
+            return def.promise();
+        }
+
+        function genCharts(start,end) {
+            $.when(getOrderSellReport(start,end)).done(function (ret) {
+                if(ret.status == 0 && ret.data.length > 0){
+                    var xAxis = ret.data.map(function(m){
+                        return m['ct'];
+                    });
+
+                    var seriesData = [];
+
+                    seriesData.push({name:'订单销售额',data:ret.data.map(function(m){
+                        return m['orderTotalPrice'];
+                    })});
+                    seriesData.push({name:'商品销售额',data:ret.data.map(function(m){
+                        return m['goodsTotalPrice'];
+                    })});
+
+                    $('#biz_report_goods').highcharts({
+                        title: {
+                            text: '',
+                            x: -20 //center
+                        },
+                        subtitle: {
+                            text: '',
+                            x: -20
+                        },
+                        credits:{
+                            text:'',
+                            href:''
+                        },
+                        xAxis: {
+                            categories: xAxis
+                        },
+                        yAxis: {
+                            title: {
+                                text: '¥'
+                            },
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                        },
+                        tooltip: {
+                            valueSuffix: '¥'
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'middle',
+                            borderWidth: 0
+                        },
+                        series: seriesData
+                    });
+
+                }
+
+            })
+        }
+
+        function bindEvent() {
+            element.on('tab(report_sell_status_filter)', function (data) {
+                var status = $(this).data('status');
+                if(status == 1) {
+                    genCharts();
+                } else if(status == 2) {
+                    var start = commonUtil.getDateString((new Date()).setMonth((new Date()).getMonth() - 1));
+                    var end = commonUtil.getDateString((new Date()).setDate((new Date()).getDate() + 1));
+                    genCharts(start,end);
+                } else if(status == 3) {
+                    var start = commonUtil.getDateString((new Date()).setMonth((new Date()).getMonth() - 3));
+                    var end = commonUtil.getDateString((new Date()).setDate((new Date()).getDate() + 1));
+                    genCharts(start,end);
+                }
+            });
+        }
+
+        (function () {
+            init();
+        })();
+    });
+</script>

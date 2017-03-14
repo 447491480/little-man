@@ -1,24 +1,26 @@
 {
   "name": "little-man",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "yoursfengzhilian",
   "description": "node.js mvc base express",
   "keywords": [
     "little-man",
-    "monk-node"
+    "express",
+    "node.js"
   ],
   "repository": {
     "type": "git",
-    "url": "https://git.oschina.net/yourschang/little-man.git"
+    "url": "https://github.com/447491480/little-man.git"
   },
   "license": "MIT",
   "scripts": {
-    "test": "NODE_ENV=test pm2 start app.js --watch --node-args='--harmony' --name 'little-man'",
-    "start": "NODE_ENV=prod pm2 start app.js -i max --node-args='--harmony' --name 'little-man'"
+    "test": "NODE_ENV=dev pm2 start app.js --watch --node-args='--harmony' --name 'qiaqia_manager'",
+    "start": "NODE_ENV=prod pm2 start app.js -i max --node-args='--harmony' --name 'qiaqia_manager'"
   },
   "dependencies": {
     "asyncawait": "^1.0.6",
     "body-parser": "^1.16.0",
+    "config-lite": "^1.5.0",
     "connect-flash": "^0.1.1",
     "connect-multiparty": "^2.0.0",
     "cookie-parser": "^1.4.3",
@@ -40,6 +42,7 @@
     "mysql": "^2.13.0",
     "node-schedule": "^1.2.0",
     "nodemailer": "^3.0.2",
+    "read-yaml": "^1.0.0",
     "redis": "^2.6.3",
     "request": "^2.79.0",
     "sequelize": "^3.30.2",

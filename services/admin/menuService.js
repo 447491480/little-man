@@ -2,17 +2,22 @@
  * Created by chang on 2017/2/10.
  */
 var readYaml = require('read-yaml');
+var roleService = require('./roleService');
 
 var menuService = {
     getUserMenu: async(function (user_id) {
         return new Promise(function (resolve, reject) {
             var menus = await(menuService.readMenuYmal());
 
-            var user = await(db.admin_user.findOne({where: {id: user_id}}));
+            var user = await(db.shops.findOne({
+                where: {Id: user_id}
+            }));
 
-            var user_rights = JSON.parse(user.get('rights'));
+            var rightsInfo = await(roleService.getRoleById(user.get('RoleId')));
 
-            if (user['type'] == 0) {
+            var user_rights = JSON.parse(decodeURIComponent(rightsInfo.get('Rights')));
+
+            if (rightsInfo.get('Type') == 0) {
                 resolve(menus);
                 return;
             }
@@ -59,23 +64,18 @@ var menuService = {
                     var third_menus = nav_menus[nav_key]['third_menu'];
 
                     for (var third_key = 0; third_key < third_menus.length; third_key++) {
-
-
                         if (third_menus[third_key]['enable'] == undefined) {
                             delete third_menus[third_key];
-                            // third_menus.splice(third_key,1);
                         }
                     }
 
                     if (nav_menus[nav_key]['enable'] == undefined) {
                         delete nav_menus[nav_key];
-                        // nav_menus.splice(nav_key,1);
                     }
                 }
 
                 if (menus['menus'][key]['enable'] == undefined) {
                     delete menus['menus'][key];
-                    // menus['menus'].splice(key,1);
                 }
             }
 

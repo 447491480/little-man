@@ -1,0 +1,101 @@
+<div id = "admin_enterprise_list_panel">
+
+<div id = "admin_enterprise_edit_panel">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+        <legend>企业信息修改</legend>
+    </fieldset>
+
+    <form class="layui-form layui-form-pane" action="javascript:;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">企业名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="membername" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">企业角色</label>
+            <div class="layui-input-inline">
+                <input type="text" name="role" autocomplete="off" class="layui-input" disabled="disabled">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">企业地址</label>
+            <div class="layui-input-inline">
+                <input type="text" name="address" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系方式</label>
+            <div class="layui-input-inline">
+                <input type="text" name="communication" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">电子邮箱</label>
+            <div class="layui-input-inline">
+                <input type="text" name="email" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="admin_enterprise_edit_confirm">立即提交</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script>
+    layui.use(['form','commonUtil','ajaxUtil'],function () {
+        var form = layui.form();
+        var commonUtil = layui.commonUtil;
+        var ajaxUtil = layui.ajaxUtil;
+        var urls = {};
+        urls.admin_enterprise_query = '/admin/user/enterprise-query';
+        urls.admin_enterprise_save = '/admin/user/enterprise-edit';
+
+        var controls = {};
+        controls.admin_enterprise_edit_panel = $('#admin_enterprise_edit_panel');
+        var enterprise = null;
+
+        function init () {
+            bindEvent();
+            showEnterpriseInfo();
+        }
+
+        function bindEvent () {
+            //提交企业信息修改
+            form.on('submit(admin_enterprise_edit_confirm)', function (data) {
+                var args = enterprise;
+                args.MemberName = data.field.membername;
+                args.Address = data.field.address;
+                args.Communication = data.field.communication;
+                args.Email = data.field.email;
+                ajaxUtil.doAjaxPost(urls.admin_enterprise_save,args).done(function(ret) {
+                    commonUtil.toast(ret.msg);
+                });
+            })
+        }
+        
+        function showEnterpriseInfo() {
+            ajaxUtil.doAjaxGet(urls.admin_enterprise_query, null).done(function (ret) {
+                var data = ret.data;
+                enterprise = data;
+                controls.admin_enterprise_edit_panel.find('input:eq(0)').val(data.MemberName);
+                controls.admin_enterprise_edit_panel.find('input:eq(1)').val(data.role.RoleName);
+                controls.admin_enterprise_edit_panel.find('input:eq(-3)').val(data.Address);
+                controls.admin_enterprise_edit_panel.find('input:eq(-2)').val(data.Communication);
+                controls.admin_enterprise_edit_panel.find('input:eq(-1)').val(data.Email);
+            });
+        }
+
+        (function (){
+            init();
+        })();
+    });
+</script>

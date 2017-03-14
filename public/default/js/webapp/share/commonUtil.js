@@ -88,6 +88,10 @@ layui.define(['layer', 'logUtil'], function (exports) {
     };
 
     commonUtil.toast = function (msg) {
+        if(typeof msg !== 'string') {
+            msg = JSON.stringify(msg);
+        }
+
         layer.msg(msg, {offset: '300px', time: 2000});
     };
 

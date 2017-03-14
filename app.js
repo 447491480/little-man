@@ -2,11 +2,10 @@
 var path = require('path');
 var fs = require('fs');
 
-//设置时区
-process.env.TZ = 'Asia/Shanghai';
+var configure = require('more-express-config');
 
 // 载入app配置文件
-var app_config = require(path.join(__dirname, 'config', 'app'));
+var app_config = configure.get('app');
 
 // favicon.ico 支持
 var favicon = require('serve-favicon');
@@ -65,11 +64,11 @@ app.use(cookieParser());
 // session处理
 app.use(session({
     store: new fileSession({
-        ttl:172800,
-        secret: 'more-express-little-man'
+        ttl:app_config.cookie_maxAge/1000,
+        secret: app_config.session_secret
     }),
-    secret: 'more-express-little-man',
-    cookie: {maxAge: 172800000},
+    secret: app_config.session_secret,
+    cookie: {maxAge: app_config.cookie_maxAge},
     resave: true,
     saveUninitialized: true
 }));
@@ -80,8 +79,7 @@ app.set('view engine', 'html');
 
 // 设置静态资源目录
 app.use(express.static(path.join(__dirname, 'public')));
-// 上传文件
-app.use(express.static(path.join(__dirname, 'uploads')));
+
 // 设置icon图标（如果没有favicon.icon）可以注释这一行代码
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 //flash支持
@@ -92,23 +90,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // 设置默认区域
-var defaultArea = "admin";
+var defaultArea = app_config.default_area;
 
 // 创建express Router 实例
 var router = express.Router();
-// 路由中间件,实现多视图切换
-// router.use(function(req, res, next) {
-//     var url = req.url;
-//     var pathArr = url.split(/\/|\?/);
-//     var viewPath = path.join(__dirname, 'areas', defaultArea, 'views');
-//     if (pathArr[1] != "" && pathArr[1] != "favicon.ico") {
-//         viewPath = path.join(__dirname, 'areas', pathArr[1], 'views');
-//     } else {
-//         viewPath = path.join(__dirname, 'areas', defaultArea, 'views');
-//     }
-//     app.set('views', viewPath);
-//     next();
-// });
 
 // 定义视图文件位置
 app.set('views', path.join(__dirname, 'public', app_config['default_theme'], 'webapp'));
@@ -149,8 +134,8 @@ resolve
         areaDirectory: __dirname + '/areas',
         controllerDirname: 'controllers',
         defaultArea: defaultArea,
-        defautController: 'page',
-        defautAction: 'login'
+        defautController: app_config.default_controller,
+        defautAction: app_config.default_action
     })
     .bind(router);
 
@@ -174,7 +159,7 @@ app.use(function (err, req, res, next) {
 });
 
 // 设置端口
-app.set('port', process.env.PORT || 10186);
+app.set('port', process.env.PORT || app_config.default_port);
 var server = app.listen(app.get('port'), function () {
     var host = server.address().address;
     var port = server.address().port;

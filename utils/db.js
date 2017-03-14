@@ -2,15 +2,13 @@
 
 var fs = require("fs");
 var path = require("path");
+var configure = require('more-express-config');
 var Sequelize = require("sequelize");
-var env = process.env.NODE_ENV || "development";
-var config = require(path.join(__dirname, '..', 'config', 'db.json'))[env];
+var config = configure.get('db');
 
-if (process.env.DATABASE_URL) {
-    var sequelize = new Sequelize(process.env.DATABASE_URL);
-} else {
-    var sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+
+var sequelize = new Sequelize(config.database, config.username, config.password, config);
+
 var db = {};
 
 fs.readdirSync(path.join(__dirname, config.output))

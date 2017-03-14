@@ -13,11 +13,10 @@ module.exports = {
         }
 
         userService.checkUserLogin(account,password,req).then(function(ret){
-            if(ret) {
-                res.jsonWrap();
-            } else {
-                res.jsonWrap(null,2,'用户名或者密码错误');
-            }
+            res.jsonWrap(ret);
+        }).catch(function(e){
+            //console.log(e);
+            res.jsonWrap(null,2,e);
         });
     }
 };

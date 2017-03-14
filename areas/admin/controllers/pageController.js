@@ -6,11 +6,13 @@ var sessionFilter = require('../../../filters/adminSessionFilter');
 
 module.exports = {
     get_index: [sessionFilter,function (req, res) {
-        menuService.getUserMenu(req.session.admin_login_info.id).then(function (data) {
+        menuService.getUserMenu(req.session.admin_login_info.shop.Id).then(function (data) {
             // res.jsonWrap(data);
-            res.render('admin/admin.html',{data:data,account:req.session.admin_login_info.account});
+            // res.jsonWrap(req.session.admin_login_info);
+            res.render('admin/admin.html',{data:data,account:req.session.admin_login_info.shop.MemberName});
         }).catch(function(error) {
-            console.log(error);
+            //console.log(error);
+            res.jsonWrap(error,1,'服务器异常');
         });
     }],
 
@@ -20,7 +22,6 @@ module.exports = {
         } else {
             res.render('admin/login');
         }
-
     },
 
     get_logout : function (req, res) {
@@ -31,5 +32,9 @@ module.exports = {
     get_getPart : [sessionFilter, function (req, res) {
         var page = req.query.page;
         res.render('admin/'+page);
+    }],
+
+    get_updateSession : [sessionFilter, function(req, res){
+        res.jsonWrap();
     }]
 };

@@ -1,0 +1,241 @@
+<div id="biz_category_list_panel" >
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+        <legend>分类列表</legend>
+    </fieldset>
+
+    <blockquote class="layui-elem-quote">
+        <div >
+            <button class="layui-btn layui-btn-small"><i class="layui-icon">&#xe608;</i> 新增</button>
+        </div>
+    </blockquote>
+
+    <div style="margin-top: 10px;">
+        <table id="biz_category_list_grid" class="jqgrid-table"></table>
+        <div id="biz_category_list_grid_pager"></div>
+    </div>
+</div>
+
+<div id="biz_category_edit_panel" style="display: none;">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+        <legend>新增/修改分类</legend>
+    </fieldset>
+    <blockquote class="layui-elem-quote">
+        <div>
+            <button class="layui-btn layui-btn-small"><i class="layui-icon">&#xe603;</i> 返回分类列表</button>
+        </div>
+    </blockquote>
+    <form class="layui-form layui-form-pane" action="javascript:;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">分类名称</label>
+            <div class="layui-input-inline">
+                <input type="text" lay-verify="required" name="CategoryName" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">分类图片</label>
+
+            <div style="border-right: 1px solid #e6e6e6;border-left: 1px solid #e6e6e6;border-bottom: 1px solid #e6e6e6;">
+                <img style="width: 100px;height: 100px;border: 1px solid silver;margin: 5px;"
+                     src="" id="category_image_preview">
+                <input type="file" name="file" class="layui-upload-file" lay-title="点击上传" id="category_image_btn">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="biz_category_edit_confirm" onclick="return false">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    layui.use(['commonUtil','form','ajaxUtil','upload'],function() {
+        var commonUtil = layui.commonUtil;
+        var form = layui.form();
+        var ajaxUtil = layui.ajaxUtil;
+
+        var urls = {};
+        urls.biz_category_query = '/admin/goods/category-list';
+        urls.biz_category_save = '/admin/goods/save-category';
+        urls.biz_category_delete = '/admin/goods/delete-category';
+
+        var controls = {};
+        controls.biz_category_list_panel = $('#biz_category_list_panel');
+        controls.biz_category_edit_panel = $('#biz_category_edit_panel');
+
+        var M = {};
+        M.MODIFY_STATUS = false;
+        M.DATA = null;
+
+        var G_IMAGE = null;
+
+
+        function init() {
+            bindEvent();
+            loadCategoryData();
+        }
+
+        function bindEvent() {
+            // 监听提交
+            form.on('submit(biz_category_edit_confirm)', function(data){
+                var args = data.field;
+
+                if(G_IMAGE) {
+                    args.CategoryImg = G_IMAGE;
+                }
+
+                if(M.MODIFY_STATUS) {
+                    args.Id = M.DATA.Id;
+                }
+
+                ajaxUtil.doAjaxPost(urls.biz_category_save,args).done(function(ret){
+                    commonUtil.toast(ret.msg);
+
+                    if(ret.status == 0) {
+                        controls.biz_category_edit_panel.find('button:eq(0)').trigger('click');
+                        refresh();
+                    }
+                });
+
+                return false;
+            });
+
+            layui.upload({
+                url: '/admin/file/upload',
+                elem: '#category_image_btn',
+                success: function (res) {
+                    if (res.code == 0) {
+                        $('#category_image_preview').attr('src', res.data.src);
+                        G_IMAGE = res.data.src;
+                    }
+                }
+            });
+
+            // 点击增加
+            controls.biz_category_list_panel.find('button:eq(0)').bind('click',function(){
+                showEditPanel();
+            });
+
+            // 点击返回
+            controls.biz_category_edit_panel.find('button:eq(0)').bind('click',function(){
+                controls.biz_category_edit_panel.find('button:eq(-1)').trigger('click');
+                showListPanel();
+                M.MODIFY_STATUS = false;
+                M.DATA = null;
+
+                form.render();
+            });
+
+            // 重置功能
+            controls.biz_category_edit_panel.find('button:eq(-1)').bind('click', function () {
+                G_IMAGE = null;
+                $('#category_image_preview').attr('src', '');
+            });
+
+            // 修改
+            $("#biz_category_list_grid").on({
+                'click':function(){
+                    var data = JSON.parse(decodeURIComponent($(this).data('category')));
+
+                    showEditPanel();
+                    controls.biz_category_edit_panel.find('input:eq(0)').val(data.CategoryName);
+
+                    if (data.CategoryImg) {
+                        G_IMAGE = data.CategoryImg;
+                        $('#category_image_preview').attr('src', G_IMAGE);
+                    }
+
+                    form.render();
+
+                    M.MODIFY_STATUS = true;
+                    M.DATA = data;
+                }
+            },'.biz-category-modify');
+
+            // 删除
+            $("#biz_category_list_grid").on({
+                'click':function(){
+                    var data = JSON.parse(decodeURIComponent($(this).data('category')));
+
+                    var confirmLayer = layer.confirm('确定删除？', {
+                        btn: ['确定','取消'] //按钮
+                    }, function(){
+                        layer.close(confirmLayer);
+                        ajaxUtil.doAjaxGet(urls.biz_category_delete,{'Id':data.Id}).done(function(ret){
+                            commonUtil.toast(ret.msg);
+                            if(ret.status == 0) {
+                                refresh();
+                            }
+                        });
+                    }, function(){});
+                }
+            },'.biz-category-delete');
+        }
+
+        function showEditPanel() {
+            controls.biz_category_edit_panel.show();
+            controls.biz_category_list_panel.hide();
+        }
+
+        function showListPanel() {
+            controls.biz_category_edit_panel.hide();
+            controls.biz_category_list_panel.show();
+        }
+
+        function refresh() {
+            var page = $("#biz_category_list_grid").getGridParam('page'); // current page
+            var rows = $("#biz_category_list_grid").getGridParam('rows'); // rows
+            $("#biz_category_list_grid").jqGrid('setGridParam', {
+                page:page,
+                rows:rows
+            }).trigger("reloadGrid")
+        }
+
+        function loadCategoryData() {
+            $("#biz_category_list_grid").jqGrid({
+                colModel: [
+                    {label: '分类名称', name: 'CategoryName',align:'center'},
+                    {label: '创建时间', name: 'CreateTime',align:'center',formatter:function(cellValue,options,rowObject){
+                        return commonUtil.getTimeString(cellValue);
+                    }},
+                    {label: '操作',align:'center',width:'210',formatter:function(cellValue, options, rowObject) {
+                        var _dom =
+                            '<span data-category="'+encodeURIComponent(JSON.stringify(rowObject))+'" href="javascript:;" class="my-grid-a-span biz-category-modify">修改</span>/<span data-category="'+encodeURIComponent(JSON.stringify(rowObject))+'" href="javascript:;" class="my-grid-a-span biz-category-delete">删除</span>';
+
+                        return _dom;
+                    }}
+                ],
+                datatype:'json',
+                url:urls.biz_category_query,
+                rowNum:10,
+                rowList:[10,20,30],
+                viewrecords: true, // show the current page, data rang and total records on the toolbar
+                height: true,
+                fitColumns: true,
+                width:true,
+                autowidth: true,
+                shrinkToFit: true,
+                ajaxGridOptions:{
+                    dataFilter:function(ret) {
+                        var retObj = JSON.parse(ret);
+                        if(retObj.status == 0) {
+                            return JSON.stringify(retObj.data);
+                        } else {
+                            commonUtil.toast(retObj.msg);
+                        }
+                    }
+                },
+                pager: "#biz_category_list_grid_pager"
+            });
+
+            // 初始化宽宽，用于自适应宽度
+            $("#biz_category_list_grid").setGridWidth($("#admin-tab-container").width()-10, true);
+        }
+
+        (function(){
+            init();
+        })();
+    });
+</script>

@@ -1,0 +1,58 @@
+<blockquote class="layui-elem-quote">今日订单统计</blockquote>
+
+<blockquote class="layui-elem-quote" id="biz_today_report">
+    <div>今日新增订单数目:<span style="color: orangered">0</span></div>
+    <div>今日订单总额:<span style="color: orangered">0</span>(¥)</div>
+    <div>今日商品总额:<span style="color: orangered">0</span>(¥)</div>
+</blockquote>
+
+
+<script type="text/javascript">
+    layui.use(['commonUtil', 'ajaxUtil'], function () {
+        var commonUtil = layui.commonUtil;
+        var ajaxUtil = layui.ajaxUtil;
+
+        var urls = {};
+        urls.biz_report_goods_sell = '/admin/report/goods-sell-report';
+
+        var controls = {};
+        controls.biz_today_report = $('#biz_today_report');
+
+        function init() {
+            bindEvent();
+            initCharts();
+        }
+
+        function getOrderSellReport() {
+            var def = $.Deferred();
+            var args = {};
+            var today = new Date();
+            args.startTime = commonUtil.getDateString(today);
+            args.endTime = commonUtil.getDateString(today.setDate(today.getDate()+1));
+            ajaxUtil.doAjaxGet(urls.biz_report_goods_sell,args).done(function (ret) {
+                def.resolve(ret);
+            });
+            return def.promise();
+        }
+
+        function initCharts() {
+            $.when(getOrderSellReport()).done(function(ret){
+                if(ret.status == 0) {
+                    if(ret.data.length>0){
+                        var data = ret.data[0];
+                        controls.biz_today_report.find('span:eq(0)').text(data.count);
+                        controls.biz_today_report.find('span:eq(1)').text(data.orderTotalPrice);
+                        controls.biz_today_report.find('span:eq(2)').text(data.goodsTotalPrice);
+                    }
+                }
+            })
+        }
+
+        function bindEvent() {
+        }
+
+        (function () {
+            init();
+        })();
+    });
+</script>

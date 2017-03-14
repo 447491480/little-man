@@ -1,0 +1,391 @@
+<div id="biz_assist_promotion_list_panel">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+        <legend>我参与的活动列表</legend>
+    </fieldset>
+
+
+    <blockquote class="layui-elem-quote">
+        <div>
+            <button class="layui-btn layui-btn-small"><i class="layui-icon">&#x1002;</i> 刷新</button>
+        </div>
+    </blockquote>
+
+    <div class="layui-input-inline ">
+        <input type="text" lay-verify="required" placeholder="客户名称" autocomplete="off" align="right"
+               class="layui-input">
+    </div>
+    <button class="layui-btn "> 查询</button>
+
+    <div style="margin-top: 10px;">
+        <table id="biz_assist_promotion_list_grid" class="jqgrid-table"></table>
+        <div id="biz_assist_promotion_list_grid_pager"></div>
+    </div>
+</div>
+
+<div id="biz_assist_promotion_detail_panel" style="display: none;">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+        <legend>活动详情</legend>
+    </fieldset>
+    <blockquote class="layui-elem-quote">
+        <div>
+            <button class="layui-btn layui-btn-small"><i class="layui-icon">&#xe603;</i> 返回我的活动</button>
+        </div>
+    </blockquote>
+    <form class="layui-form layui-form-pane" action="javascript:;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">活动名称</label>
+            <div class="layui-input-inline">
+                <input disabled="disabled" type="text" lay-verify="required" name="PromotionTitle" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item " pane="">
+            <label class="layui-form-label">活动类型</label>
+            <div class="layui-input-block">
+                <input lay-filter="biz_promotion_type_radio" type="radio" name="PromotionType" data-i="0"
+                       value="DISCOUNT" title="折扣" checked="">
+                <input lay-filter="biz_promotion_type_radio" type="radio" name="PromotionType" data-i="1"
+                       value="FULL_MINUS" title="满减">
+                <input lay-filter="biz_promotion_type_radio" type="radio" name="PromotionType" data-i="2" value="GIFT"
+                       title="搭赠">
+            </div>
+        </div>
+        <div style="position:relative;top: -15px;border-right: 1px solid #e6e6e6;border-left: 1px solid #e6e6e6;border-bottom: 1px solid #e6e6e6;">
+            <div style="padding: 5px;">
+                <div class="promotion-gift" style="display: none;">
+                    <label class="">请输入折扣(0.01~0.99)</label>
+                    <div class="layui-input-inline">
+                        <input disabled="disabled" type="text" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div style="display: none;" class="promotion-gift" >
+                    <div class="assist-promotion-append-node">
+
+                    </div>
+
+                </div>
+
+                <div style="display: none;padding: 5px;" class="promotion-gift">
+                    <div style="margin-bottom: 5px;" class="promotion-buttons assist-promotion-append-node" >
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">选择参与厂家</label>
+
+            <div style="border-right: 1px solid #e6e6e6;border-left: 1px solid #e6e6e6;border-bottom: 1px solid #e6e6e6;">
+                <div style="padding: 5px;">
+                    <div style="margin-bottom: 5px;" class="promotion-buttons assist-promotion-append-node">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">受益角色</label>
+            <div class="layui-input-block"
+                 style="height:36px;border-right: 1px solid #e6e6e6;border-top: 1px solid #e6e6e6;border-bottom: 1px solid #e6e6e6;">
+                <input disabled="disabled" lay-skin="primary" type="checkbox" value="3" title="分销商" >
+                <input disabled="disabled" lay-skin="primary" type="checkbox" value="4" title="门店" >
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">选择参加活动商品</label>
+
+            <div style="border-right: 1px solid #e6e6e6;border-left: 1px solid #e6e6e6;border-bottom: 1px solid #e6e6e6;">
+                <div style="padding: 5px;">
+                    <div style="margin-bottom: 5px;" class="promotion-buttons assist-promotion-append-node">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">有效期</label>
+            <div class="layui-input-inline">
+                <input disabled="disabled" name="StartTime" lay-verify="datetime" class="layui-input" placeholder="开始日"
+                       id="promotion_start_time">
+            </div>
+            <div class="layui-input-inline">
+                <input disabled="disabled" name="EndTime" lay-verify="datetime" class="layui-input" placeholder="截止日"
+                       id="promotion_end_time">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">优先级</label>
+            <div class="layui-input-inline">
+                <input disabled="disabled" type="number" lay-verify="number" name="Priority" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    layui.use(['commonUtil', 'form', 'ajaxUtil'], function () {
+        var commonUtil = layui.commonUtil;
+        var form = layui.form();
+        var ajaxUtil = layui.ajaxUtil;
+
+        var urls = {};
+        urls.biz_assist_promotion_query = '/admin/promotion/assist-promotion-list';
+        urls.biz_promotion_detail = '/admin/promotion/promotion-detail';
+
+        var controls = {};
+        controls.biz_assist_promotion_list_panel = $('#biz_assist_promotion_list_panel');
+        controls.biz_assist_promotion_detail_panel = $('#biz_assist_promotion_detail_panel');
+
+        controls.biz_promotion_select_gift_goods = controls.biz_assist_promotion_detail_panel.find('.assist-promotion-append-node:eq(1)');
+        controls.biz_promotion_select_shop = controls.biz_assist_promotion_detail_panel.find('.assist-promotion-append-node:eq(2)');
+        controls.biz_promotion_select_goods = controls.biz_assist_promotion_detail_panel.find('.assist-promotion-append-node:eq(3)');
+        controls.biz_promotion_add_full_minus = controls.biz_assist_promotion_detail_panel.find('.assist-promotion-append-node:eq(0)');
+
+        function init() {
+            bindEvent();
+            loadAssistPromotionData();
+        }
+
+        function bindEvent() {
+            // 刷新
+            controls.biz_assist_promotion_list_panel.find('button:eq(0)').bind('click', function () {
+                refresh({keyword: ''});
+            });
+            //搜索
+            controls.biz_assist_promotion_list_panel.find('button:eq(1)').bind('click', function () {
+                var key = controls.biz_assist_promotion_list_panel.find('input[type=text]:eq(0)');
+                var args = {};
+                args.keyword = key.val();
+                refresh(args);
+            });
+
+            // 点击修改
+            $("#biz_assist_promotion_list_grid").on({
+                'click':function(){
+                    var data = JSON.parse(decodeURIComponent($(this).data('promotion')));
+                    showDetailPanel();
+
+                    ajaxUtil.doAjaxGet(urls.biz_promotion_detail,{id:data.promotion.Id}).done(function(ret){
+                        if(ret.status == 0) {
+                            controls.biz_assist_promotion_detail_panel.find('input:eq(0)').val(data.promotion.PromotionTitle);
+
+                            controls.biz_assist_promotion_detail_panel.find('input[name=PromotionType]').each(function(i){
+                                if(data.promotion.PromotionType == $(this).val()) {
+                                    $(this).trigger('click');
+
+                                    if(data.promotion.PromotionType == "DISCOUNT") {
+                                        controls.biz_assist_promotion_detail_panel.find('.promotion-gift:eq(0)').find('input[type=text]:eq(0)').val(data.promotion.PromotionContent);
+                                    } else if(data.promotion.PromotionType == "FULL_MINUS") {
+                                        var content = JSON.parse(data.promotion.PromotionContent);
+                                        layui.each(content,function(i,o){
+                                            controls.biz_promotion_add_full_minus.append(minusDomBuilder(o.full,o.minus));
+                                        })
+                                    } else if(data.promotion.PromotionType == "GIFT") {
+                                        var content = JSON.parse(data.promotion.PromotionContent);
+                                        layui.each(content,function(i,o){
+                                            controls.biz_promotion_select_gift_goods.append(buttonDomBuilder(o.goodsId,o.goodsName));
+                                        })
+                                    }
+
+                                    controls.biz_assist_promotion_detail_panel.find('.promotion-gift:eq(' + $(this).data('i') + ')').show();
+                                }
+
+                                form.render('radio');
+                            });
+
+                            layui.each(ret.data.joiners,function(i,o){
+                                if(o.PID) {
+                                    controls.biz_promotion_select_shop.append(buttonDomBuilder(o.SID,o.shop.MemberName));
+                                }
+                            });
+
+                            var roles = data.promotion.TargetRoleId.split('|');
+
+                            controls.biz_assist_promotion_detail_panel.find('input[type=checkbox]').each(function(){
+                                var _self = this;
+                                layui.each(roles,function(i,o) {
+                                    if(o == $(_self).val()) {
+                                        $(_self).prop('checked',true);
+                                    }
+                                });
+
+                            });
+                            form.render('checkbox');
+
+                            layui.each(ret.data.goods,function(i,o){
+                                controls.biz_promotion_select_goods.append(buttonDomBuilder(o.good.GoodsId,o.good.GoodsTitle));
+                            });
+
+                            $('#promotion_start_time').val(commonUtil.getTimeString(data.promotion.StartTime,'-'));
+                            $('#promotion_end_time').val(commonUtil.getTimeString(data.promotion.EndTime,'-'));
+
+                            controls.biz_assist_promotion_detail_panel.find('input[name=Priority]').val(data.promotion.Priority);
+
+                        } else {
+                            commonUtil.toast(ret.msg);
+                        }
+                    });
+                }
+            },'.biz-promotion-more');
+
+            controls.biz_assist_promotion_detail_panel.find('button:eq(0)').bind('click',function(){
+                showListPanel();
+
+                controls.biz_promotion_select_gift_goods.empty();
+                controls.biz_promotion_select_shop.empty();
+                controls.biz_promotion_select_goods.empty();
+                controls.biz_promotion_add_full_minus.empty();
+
+                controls.biz_assist_promotion_detail_panel.find('input[type=checkbox]').each(function(){
+                    var _self = this;
+                    $(_self).prop('checked',false);
+                });
+
+                controls.biz_assist_promotion_detail_panel.find('.promotion-gift').hide();
+            });
+        }
+
+        function refresh(data) {
+            var page = $("#biz_assist_promotion_list_grid").getGridParam('page'); // current page
+            var rows = $("#biz_assist_promotion_list_grid").getGridParam('rows'); // rows
+            $("#biz_assist_promotion_list_grid").jqGrid('setGridParam', {
+                page: page,
+                rows: rows,
+                postData: data
+            }).trigger("reloadGrid");
+        }
+
+        function showListPanel() {
+            controls.biz_assist_promotion_list_panel.show();
+            controls.biz_assist_promotion_detail_panel.hide();
+        }
+
+        function showDetailPanel() {
+            controls.biz_assist_promotion_list_panel.hide();
+            controls.biz_assist_promotion_detail_panel.show();
+        }
+
+        function buttonDomBuilder(id, name) {
+            return '<button class="layui-btn layui-btn-mini layui-btn-normal" data-gid="' + id + '" data-gname="' + name + '">' + name + '<i style="margin-left: 10px;" class="layui-icon"></i></button>';
+        }
+
+        function minusDomBuilder(full, minus) {
+            full = full || '';
+            minus = minus || '';
+
+            return '<div class="promotion-full-minus" style="margin-bottom: 5px;">' +
+                '    <label class="">满</label>' +
+                '    <div class="layui-input-inline">' +
+                '        <input disabled="disabled" type="text" autocomplete="off" value="' + full + '" class="layui-input">' +
+                '    </div>' +
+                '    <span>减</span>' +
+                '    <div class="layui-input-inline">' +
+                '        <input disabled="disabled" type="text" value="' + minus + '" autocomplete="off" class="layui-input">' +
+                '    </div>' +
+                '</div>';
+        }
+
+        function loadAssistPromotionData() {
+            $("#biz_assist_promotion_list_grid").jqGrid({
+                colModel: [
+                    {
+                        label: '活动名称',
+                        name: 'PromotionTitle',
+                        align: 'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            return rowObject.promotion.PromotionTitle
+                        }
+                    },
+                    {
+                        label: '活动类型',
+                        name: 'PromotionTitle',
+                        align: 'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            if (rowObject.promotion.PromotionType == 'DISCOUNT') {
+                                return '折扣';
+                            } else if (rowObject.promotion.PromotionType == 'FULL_MINUS') {
+                                return '满减';
+                            } else if (rowObject.promotion.PromotionType == 'GIFT') {
+                                return '搭赠';
+                            } else {
+                                return rowObject.promotion.PromotionType;
+                            }
+                        }
+                    },
+                    {
+                        label: '优先级',
+                        name: 'Priority',
+                        align: 'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            return rowObject.promotion.Priority;
+                        }
+                    },
+                    {
+                        label: '开始时间',
+                        name: 'StartTime',
+                        align: 'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            return commonUtil.getTimeString(rowObject.promotion.StartTime);
+                        }
+                    },
+                    {
+                        label: '结束时间',
+                        name: 'EndTime',
+                        align: 'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            return commonUtil.getTimeString(rowObject.promotion.EndTime);
+                        }
+                    },
+                    {
+                        label: '创建时间',
+                        name: 'CreateTime',
+                        align: 'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            return commonUtil.getTimeString(rowObject.promotion.CreateTime);
+                        }
+                    },
+                    {
+                        label: '操作', align: 'center', formatter: function (cellValue, options, rowObject) {
+                        var _dom = '';
+
+                        _dom += '<span data-promotion="' + encodeURIComponent(JSON.stringify(rowObject)) + '" href="javascript:;" class="my-grid-a-span biz-promotion-more">详情</span>';
+
+                        return _dom;
+                    }
+                    }
+                ],
+                datatype: 'json',
+                url: urls.biz_assist_promotion_query,
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                viewrecords: true, // show the current page, data rang and total records on the toolbar
+                height: true,
+                fitColumns: true,
+                width: true,
+                autowidth: true,
+                shrinkToFit: true,
+                ajaxGridOptions: {
+                    dataFilter: function (ret) {
+                        var retObj = JSON.parse(ret);
+                        if (retObj.status == 0) {
+                            return JSON.stringify(retObj.data);
+                        } else {
+                            commonUtil.toast(retObj.msg);
+                        }
+                    }
+                },
+                pager: "#biz_assist_promotion_list_grid_pager"
+            });
+
+            // 初始化宽宽，用于自适应宽度
+            $("#biz_assist_promotion_list_grid").setGridWidth($("#admin-tab-container").width() - 10, true);
+        }
+
+        (function () {
+            init();
+        })();
+    });
+</script>
