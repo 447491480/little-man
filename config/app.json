@@ -6,5 +6,4 @@
     "session_secret":"more-express-little-man",
     "cookie_maxAge":172800000,
     "default_theme": "default"
-
 }
