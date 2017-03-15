@@ -7,13 +7,13 @@ var roleSelectService = require('./roleSelectService');
 
 var userService = {
     checkUserLogin: async(function (account, password, req) {
-        db.member.belongsTo(db.shops, {
+        db().member.belongsTo(db().shops, {
             foreignKey: 'ShopId',
             constraints: false
         });
 
-        var data = await(db.member.findOne({
-            include: [{model: db.shops}],
+        var data = await(db().member.findOne({
+            include: [{model: db().shops}],
             where: {MemberAccount: account, MemberPass: helper.md5(account + password)}
         }));
 
@@ -32,7 +32,7 @@ var userService = {
             delete data['id'];
             delete data['MemberAccount'];
 
-            var msg = await(db.shops.update(data, {
+            var msg = await(db().shops.update(data, {
                 where: {
                     Id: id
                 }
@@ -60,7 +60,7 @@ var userService = {
 
             delete data['MemberAccount'];
 
-            var user = await(db.member.findOne({where: {MemberAccount: member.MemberAccount}}));
+            var user = await(db().member.findOne({where: {MemberAccount: member.MemberAccount}}));
             if (user) {
                 throw '账号已存在';
             }
@@ -74,16 +74,16 @@ var userService = {
                 Name:'总部',
                 Type:'1'
             }
-            return await(db.sequelize.transaction(async(function (t) {
-                await(db.shops.create(data, {transaction: t}));
-                await(db.member.create(member, {transaction: t}));
-                await(db.shopRelation.create(shopRelation,{transaction:t}));
-                await(db.create(tree,{transaction:t}))
+            return await(db().sequelize.transaction(async(function (t) {
+                await(db().shops.create(data, {transaction: t}));
+                await(db().member.create(member, {transaction: t}));
+                await(db().shopRelation.create(shopRelation,{transaction:t}));
+                await(db().create(tree,{transaction:t}))
             })));
         }
     }),
     editEnterprise: async(function (data) {
-        return await(db.shops.update(data, {
+        return await(db().shops.update(data, {
                 where: {
                     Id: data.Id
                 }
@@ -91,12 +91,12 @@ var userService = {
     }),
 
     deleteUser: async(function (id) {
-         return await(db.sequelize.transaction(async(function(t){
-             await(db.shops.update({IsDelete: 1}, {where: {Id: id}},{transaction:t}));
-             await(db.member.destroy({where: {ShopId: id}},{transaction:t}));
+         return await(db().sequelize.transaction(async(function(t){
+             await(db().shops.update({IsDelete: 1}, {where: {Id: id}},{transaction:t}));
+             await(db().member.destroy({where: {ShopId: id}},{transaction:t}));
          })));
 
-        //var msg = await(db.shops.update({IsDelete: 1}, {
+        //var msg = await(db().shops.update({IsDelete: 1}, {
         //    where: {
         //        Id: id
         //    }
@@ -111,9 +111,9 @@ var userService = {
 
     queryEnterprise: async(function (data) {
        return new Promise(function (resolve, reject) {
-           db.shops.belongsTo(db.roles, {foreignKey: 'RoleId'});
-           db.shops.findOne({
-               include: [db.roles],
+           db().shops.belongsTo(db().roles, {foreignKey: 'RoleId'});
+           db().shops.findOne({
+               include: [db().roles],
                where:{Id:data.shopId}}).then(function (data) {
                resolve(data);
            }).catch(function (msg) {
@@ -125,8 +125,8 @@ var userService = {
         return new Promise(function (resolve, reject) {
             var offset = (page - 1) * limit;
 
-            db.shops.belongsTo(db.roles, {foreignKey: 'RoleId'});
-            db.shops.belongsTo(db.member, {foreignKey: 'MemberId'});
+            db().shops.belongsTo(db().roles, {foreignKey: 'RoleId'});
+            db().shops.belongsTo(db().member, {foreignKey: 'MemberId'});
 
             var roleIds = roleSelectService.getRoleList(session.shop.RoleId);
 
@@ -135,8 +135,8 @@ var userService = {
                 whereCase.MemberName = {$like: '%' + keyword + '%'};
             }
 
-            db.shops.findAndCountAll({
-                include: [db.roles, db.member],
+            db().shops.findAndCountAll({
+                include: [db().roles, db().member],
                 offset: offset,
                 limit: limit,
                 where: whereCase,
@@ -157,20 +157,20 @@ var userService = {
             throw '不能把自己设为下级';
         }
 
-        if (await(db.shopRelation.findOne({where: {PID: pid, SID: sid}}))) {
+        if (await(db().shopRelation.findOne({where: {PID: pid, SID: sid}}))) {
             throw '已经设置为下级，不能重复设置';
         }
 
-        return await(db.shopRelation.create({PID: pid, SID: sid}))
+        return await(db().shopRelation.create({PID: pid, SID: sid}))
     }),
 
     setPaymentDays: async(function (id, days) {
-        return await(db.shopRelation.update({PaymentDays: days},{where:{Id:id}}));
+        return await(db().shopRelation.update({PaymentDays: days},{where:{Id:id}}));
     }),
 
     deleteRelation: function (id) {
         return new Promise(function (resolve, reject) {
-            db.shopRelation.destroy({
+            db().shopRelation.destroy({
                 where: {Id: id}
             }).then(function (msg) {
                 resolve(msg);
@@ -187,11 +187,11 @@ var userService = {
             if (typeof(key) != "undefined" && key != '') {
                 keyword.MemberName = {'$like': '%' + key + '%'};
             }
-            db.shopRelation.belongsTo(db.shops, {foreignKey: 'SID'});
+            db().shopRelation.belongsTo(db().shops, {foreignKey: 'SID'});
 
-            db.shopRelation.findAndCountAll({
+            db().shopRelation.findAndCountAll({
                 include: [{
-                    'model': db.shops,
+                    'model': db().shops,
                     'where': keyword
                 }],
                 offset: offset,
@@ -214,11 +214,11 @@ var userService = {
         if (key) {
             keyword.MemberName = {'$like': '%' + key + '%'};
         }
-        db.shopRelation.belongsTo(db.shops, {foreignKey: 'PID'});
+        db().shopRelation.belongsTo(db().shops, {foreignKey: 'PID'});
 
-        var ret = await(db.shopRelation.findAndCountAll({
+        var ret = await(db().shopRelation.findAndCountAll({
             include: [{
-                'model': db.shops,
+                'model': db().shops,
                 'where': keyword
             }],
             offset: offset,
@@ -236,14 +236,14 @@ var userService = {
                 reject('新密码不能和原始密码相同');
                 return;
             }
-            var user = await(db.member.findOne({where: {Id: id}}));
+            var user = await(db().member.findOne({where: {Id: id}}));
 
             if (user && user.MemberPass != helper.md5(user.MemberAccount + oldpass)) {
                 reject('原始密码不正确');
                 return;
             }
 
-            var ret = await(db.member.update({MemberPass: helper.md5(user.MemberAccount + newpass)}, {where: {Id: id}}));
+            var ret = await(db().member.update({MemberPass: helper.md5(user.MemberAccount + newpass)}, {where: {Id: id}}));
 
             if (ret > 0) {
                 resolve('操作成功');
@@ -254,7 +254,7 @@ var userService = {
     }),
     queryMember: async(function(page,limit,data){
         var offset = (page - 1) * limit;
-        var ret = await(db.member.findAndCountAll({
+        var ret = await(db().member.findAndCountAll({
             offset:offset,
             limit:limit,
             where:data,
@@ -264,7 +264,7 @@ var userService = {
     }),
     deleteMember: async(function (id) {
         return new Promise(function (resolve, reject) {
-            db.member.destroy({
+            db().member.destroy({
                 where: {Id: id}
             }).then(function (msg) {
                 resolve(msg);
@@ -277,7 +277,7 @@ var userService = {
         if (data.Id) {
             var id = data.Id;
             delete data['Id'];
-            return await(db.member.update(data, {
+            return await(db().member.update(data, {
                 where: {
                     Id: id
                 }
@@ -289,11 +289,11 @@ var userService = {
             data.Type = 1;
             data.IsDel = 0;
 
-            var user = await(db.member.findOne({where: {MemberAccount: data.MemberAccount}}));
+            var user = await(db().member.findOne({where: {MemberAccount: data.MemberAccount}}));
             if (user) {
                 throw '账号已存在';
             }
-            return await(db.member.create(data));
+            return await(db().member.create(data));
         }
     })
 };

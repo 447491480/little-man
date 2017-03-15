@@ -1,15 +1,17 @@
 {
+  "default":{
     "username": "",
     "password": "",
     "database": "",
     "host": "120.26.87.71",
     "dialect": "mysql",
     "port": "3306",
-    "charset" : "utf8mb4",
-    "timezone" : "+08:00",
+    "charset": "utf8mb4",
+    "timezone": "+08:00",
     "output": "../models",
     "additional": {
-        "timestamps": false,
-        "freezeTableName": true
+      "timestamps": false,
+      "freezeTableName": true
     }
+  }
 }

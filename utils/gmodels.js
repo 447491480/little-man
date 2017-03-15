@@ -1,6 +1,10 @@
 var configure = require('more-express-config');
 var config = configure.get('db');
 
+if(Object.keys(config).length==1) {
+    config = config.default;
+}
+
 var SequelizeAuto = require('sequelize-auto');
 var auto = new SequelizeAuto(config.database, config.username, config.password, config);
 

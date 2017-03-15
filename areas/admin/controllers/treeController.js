@@ -13,7 +13,7 @@ module.exports = {
         treeService.getParents(id, 0, req.session.admin_login_info).then(function (ret) {
             res.jsonWrap(ret);
         }).catch(function (e) {
-            //console.log(e);
+            console.log(e);
             res.jsonWrap(e, 1, '操作失败');
         })
     }],
@@ -21,7 +21,7 @@ module.exports = {
         treeService.queryNodes(req.query,req.session.admin_login_info).then(function (ret) {
             res.jsonWrap(ret);
         }).catch(function (msg) {
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(msg, 1, '操作失败');
         })
     }],
@@ -33,7 +33,7 @@ module.exports = {
         treeService.saveNode(data,req.session.admin_login_info).then(function (ret) {
             res.jsonWrap(ret);
         }).catch(function (e) {
-            //console.log(e);
+            console.log(e);
             res.jsonWrap(e, 1, '操作失败');
         })
     }],
@@ -44,7 +44,7 @@ module.exports = {
         treeService.deleteNode(Id).then(function (ret) {
             res.jsonWrap(ret);
         }).catch(function (e) {
-            //console.log(e);
+            console.log(e);
             res.jsonWrap(e, 1, '操作失败');
         })
     }],
@@ -55,7 +55,7 @@ module.exports = {
         treeService.getParents(id, 1, req.session.admin_login_info).then(function (ret) {
             res.jsonWrap(ret);
         }).catch(function (e) {
-            //console.log(e);
+            console.log(e);
             res.jsonWrap(e, 1, '操作失败');
         })
     }],
@@ -67,7 +67,7 @@ module.exports = {
         treeService.saveNode(data,req.session.admin_login_info).then(function (ret) {
             res.jsonWrap(ret);
         }).catch(function (e) {
-            //console.log(e);
+            console.log(e);
             res.jsonWrap(e, 1, '操作失败');
         })
     }],
@@ -78,7 +78,7 @@ module.exports = {
         treeService.deleteNode(Id).then(function (ret) {
             res.jsonWrap(ret);
         }).catch(function (e) {
-            //console.log(e);
+            console.log(e);
             res.jsonWrap(e, 1, '操作失败');
         })
     }]

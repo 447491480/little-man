@@ -13,7 +13,7 @@ module.exports = {
         orderService.queryOrder(pageLimit.page,pageLimit.limit,status,req.session.admin_login_info).then(function(data){
             res.jsonWrap(data);
         }).catch(function(err){
-            //console.log(err);
+            console.log(err);
             res.jsonWrap(null,1,err);
         });
     }],
@@ -25,7 +25,7 @@ module.exports = {
         orderService.orderStatusChange(id,status).then(function(data){
             res.jsonWrap(data);
         }).catch(function(msg){
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(msg,1,'操作失败');
         });
     }],
@@ -36,7 +36,7 @@ module.exports = {
         orderService.paymentList(pageLimit.page,pageLimit.limit,req.session.admin_login_info).then(function(data){
             res.jsonWrap(data);
         }).catch(function(err){
-            //console.log(err);
+            console.log(err);
             res.jsonWrap(err,1,'操作失败');
         });
     }],
@@ -48,7 +48,7 @@ module.exports = {
         orderService.setPayment(id,payment).then(function(data){
             res.jsonWrap(data);
         }).catch(function(msg){
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(msg,1,'操作失败');
         });
     }]

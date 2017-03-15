@@ -15,7 +15,7 @@ module.exports = {
         userService.checkUserLogin(account,password,req).then(function(ret){
             res.jsonWrap(ret);
         }).catch(function(e){
-            //console.log(e);
+            console.log(e);
             res.jsonWrap(null,2,e);
         });
     }

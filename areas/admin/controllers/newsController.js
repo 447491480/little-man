@@ -12,7 +12,7 @@ module.exports = {
         newsService.newsList(page, limit, type).then(function(data){
             res.jsonWrap(data);
         }).catch(function(msg){
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(msg,1,'服务器错误');
         })
     }],
@@ -21,7 +21,7 @@ module.exports = {
         newsService.saveNews(data).then(function(ret){
             res.jsonWrap(ret);
         }).catch(function(msg){
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(msg,1,'操作失败');
         })
     }],
@@ -30,7 +30,7 @@ module.exports = {
         newsService.deleteNews(Id).then(function(ret){
             res.jsonWrap(ret);
         }).catch(function(msg){
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(msg,1,'操作失败');
         })
     }]

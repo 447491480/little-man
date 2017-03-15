@@ -4,7 +4,7 @@
 module.exports = {
     getPromotionList: async(function (page, limit, session) {
         var offset = (page - 1) * limit;
-        var ret = await(db.promotions.findAndCountAll({
+        var ret = await(db().promotions.findAndCountAll({
             offset: offset,
             limit: limit,
             where: {
@@ -17,10 +17,10 @@ module.exports = {
     }),
 
     deletePromotion: async(function (id) {
-        return await(db.sequelize.transaction(async(function (t) {
-            await(db.promotions.destroy({where: {Id: id}}, {transaction: t}));
-            await(db.promotionJoiners.destroy({where: {PromotionId: id}}, {transaction: t}));
-            await(db.goods4promotions.destroy({where: {PromotionId: id}}, {transaction: t}));
+        return await(db().sequelize.transaction(async(function (t) {
+            await(db().promotions.destroy({where: {Id: id}}, {transaction: t}));
+            await(db().promotionJoiners.destroy({where: {PromotionId: id}}, {transaction: t}));
+            await(db().goods4promotions.destroy({where: {PromotionId: id}}, {transaction: t}));
         })));
     }),
 
@@ -71,7 +71,7 @@ module.exports = {
             var goods = JSON.parse(data.goods || []);
 
             // 验证商品是否已经参与活动
-            var pRet = await(db.goods4promotions.findAll({
+            var pRet = await(db().goods4promotions.findAll({
                 where: {
                     GoodsId: {
                         $in: goods.map(function (m) {
@@ -112,17 +112,17 @@ module.exports = {
                 goods4Promotion.push(good);
             }
 
-            return await(db.sequelize.transaction(async(function (t) {
-                await(db.promotions.update(promotion, {where: {Id: data.Id}}, {transaction: t}));
-                await(db.promotionJoiners.destroy({where: {PromotionId: data.Id}}, {transaction: t}));
-                await(db.goods4promotions.destroy({where: {PromotionId: data.Id}}, {transaction: t}));
+            return await(db().sequelize.transaction(async(function (t) {
+                await(db().promotions.update(promotion, {where: {Id: data.Id}}, {transaction: t}));
+                await(db().promotionJoiners.destroy({where: {PromotionId: data.Id}}, {transaction: t}));
+                await(db().goods4promotions.destroy({where: {PromotionId: data.Id}}, {transaction: t}));
 
                 if (shops.length > 0) {
-                    await(db.promotionJoiners.bulkCreate(promotionJoiners, {transaction: t}));
+                    await(db().promotionJoiners.bulkCreate(promotionJoiners, {transaction: t}));
                 } else {
-                    await(db.promotionJoiners.create(promotionJoiner, {transaction: t}));
+                    await(db().promotionJoiners.create(promotionJoiner, {transaction: t}));
                 }
-                await(db.goods4promotions.bulkCreate(goods4Promotion, {transaction: t}));
+                await(db().goods4promotions.bulkCreate(goods4Promotion, {transaction: t}));
             })))
         } else {
             var promotion = {
@@ -168,7 +168,7 @@ module.exports = {
             var goods = JSON.parse(data.goods || []);
 
             // 验证商品是否已经参与活动
-            var pRet = await(db.goods4promotions.findAll({
+            var pRet = await(db().goods4promotions.findAll({
                 where: {
                     GoodsId: {
                         $in: goods.map(function (m) {
@@ -207,28 +207,28 @@ module.exports = {
                 goods4Promotion.push(good);
             }
 
-            return await(db.sequelize.transaction(async(function (t) {
-                await(db.promotions.create(promotion, {transaction: t}));
+            return await(db().sequelize.transaction(async(function (t) {
+                await(db().promotions.create(promotion, {transaction: t}));
                 if (shops.length > 0) {
-                    await(db.promotionJoiners.bulkCreate(promotionJoiners, {transaction: t}));
+                    await(db().promotionJoiners.bulkCreate(promotionJoiners, {transaction: t}));
                 } else {
-                    await(db.promotionJoiners.create(promotionJoiner, {transaction: t}));
+                    await(db().promotionJoiners.create(promotionJoiner, {transaction: t}));
                 }
-                await(db.goods4promotions.bulkCreate(goods4Promotion, {transaction: t}));
+                await(db().goods4promotions.bulkCreate(goods4Promotion, {transaction: t}));
             })))
         }
     }),
 
     getPromotionDetail: async(function (id) {
-        db.promotionJoiners.belongsTo(db.shops, {foreignKey: 'SID'});
-        var joiners = await(db.promotionJoiners.findAll({
-            include: [db.shops],
+        db().promotionJoiners.belongsTo(db().shops, {foreignKey: 'SID'});
+        var joiners = await(db().promotionJoiners.findAll({
+            include: [db().shops],
             where: {PromotionId: id}
         }));
 
-        db.goods4promotions.belongsTo(db.goods, {foreignKey: 'GoodsId', targetKey: 'Id'});
-        var goods = await(db.goods4promotions.findAll({
-            include: [db.goods],
+        db().goods4promotions.belongsTo(db().goods, {foreignKey: 'GoodsId', targetKey: 'Id'});
+        var goods = await(db().goods4promotions.findAll({
+            include: [db().goods],
             where: {PromotionId: id}
         }));
 
@@ -239,17 +239,17 @@ module.exports = {
     assistPromotionList: async(function (page, limit,keyword, session) {
         var offset = (page - 1) * limit;
 
-        db.promotionJoiners.belongsTo(db.promotions,{foreignKey:'PromotionId'});
+        db().promotionJoiners.belongsTo(db().promotions,{foreignKey:'PromotionId'});
 
         var whereCase = {};
         if(keyword != '') {
             whereCase = {PromotionTitle:{$like:'%'+keyword+'%'}}
         }
 
-        var ret = await(db.promotionJoiners.findAndCountAll({
+        var ret = await(db().promotionJoiners.findAndCountAll({
             offset: offset,
             limit: limit,
-            include: [{model:db.promotions,where:whereCase}],
+            include: [{model:db().promotions,where:whereCase}],
             where: {
                 SID:session.shop.Id,
                 PID:{$ne:null}

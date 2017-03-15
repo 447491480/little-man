@@ -12,10 +12,10 @@ module.exports = {
 
         whereCase.SellerId = session.shop.Id;
 
-        db.orders.belongsTo(db.shops, {foreignKey: 'PurchaserId'});
+        db().orders.belongsTo(db().shops, {foreignKey: 'PurchaserId'});
 
-        var ret = await(db.orders.findAndCountAll({
-            include: [db.shops],
+        var ret = await(db().orders.findAndCountAll({
+            include: [db().shops],
             offset: offset,
             limit: limit,
             where: whereCase,
@@ -26,7 +26,7 @@ module.exports = {
     }),
 
     orderStatusChange: async(function (orderId, status) {
-        var ret = await(db.orders.update({OrderProgressState: status}, {where: {Id: orderId}}));
+        var ret = await(db().orders.update({OrderProgressState: status}, {where: {Id: orderId}}));
         if (ret) {
             return true;
         } else {
@@ -38,11 +38,11 @@ module.exports = {
     paymentList: async(function (page, limit, session) {
         var offset = (page - 1) * limit;
 
-        db.paymentDaysRecord.belongsTo(db.orders, {foreignKey: 'OrderId'});
-        db.paymentDaysRecord.belongsTo(db.shops, {foreignKey: 'PurchaserId'});
+        db().paymentDaysRecord.belongsTo(db().orders, {foreignKey: 'OrderId'});
+        db().paymentDaysRecord.belongsTo(db().shops, {foreignKey: 'PurchaserId'});
 
-        var ret = await(db.paymentDaysRecord.findAndCountAll({
-            include: [db.orders, db.shops],
+        var ret = await(db().paymentDaysRecord.findAndCountAll({
+            include: [db().orders, db().shops],
             offset: offset,
             limit: limit,
             where: {SellerId: session.shop.Id},
@@ -53,7 +53,7 @@ module.exports = {
     }),
 
     setPayment: async(function (id, payment) {
-        return await(db.paymentDaysRecord.update(
+        return await(db().paymentDaysRecord.update(
             {Reverse: payment, ReverseTime: helper.getCurrentDate()},
             {where:{Id:id}}
         ));

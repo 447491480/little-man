@@ -15,7 +15,7 @@ module.exports = {
         goodsService.goodsList(page, limit,IsEnable, req.session.admin_login_info).then(function (data) {
             res.jsonWrap(data);
         }).catch(function (msg) {
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(msg, 1, '服务器错误');
         })
     }],
@@ -27,7 +27,7 @@ module.exports = {
         goodsService.saveGoods(data, req.session.admin_login_info).then(function (ret) {
             res.jsonWrap(ret);
         }).catch(function (msg) {
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(msg, 1, '操作失败');
         })
     }],
@@ -39,7 +39,7 @@ module.exports = {
         goodsService.deleteGoods(id, req.session.admin_login_info).then(function (ret) {
             res.jsonWrap(ret);
         }).catch(function (msg) {
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(msg, 1, '操作失败');
         })
     }],
@@ -51,7 +51,7 @@ module.exports = {
         goodsService.getLeaderGoods(pageInfo.page, pageInfo.limit, req.session.admin_login_info).then(function (ret) {
             res.jsonWrap(ret);
         }).catch(function (e) {
-            //console.log(e);
+            little-man.log(e);
             res.jsonWrap(e, 1, '操作失败');
         })
     }],
@@ -63,7 +63,7 @@ module.exports = {
         goodsService.saveLeaderGoods(goods,req.session.admin_login_info).then(function(ret){
             res.jsonWrap(ret);
         }).catch(function (e) {
-            //console.log(e);
+            console.log(e);
             res.jsonWrap(e, 1, '操作失败');
         });
     }],
@@ -73,7 +73,7 @@ module.exports = {
         goodsService.listBrand(pageLimit.page,pageLimit.limit).then(function(ret){
             res.jsonWrap(ret);
         }).catch(function(e){
-            //console.log(e);
+            console.log(e);
             res.jsonWrap(e,1,'操作失败');
         })
     }],
@@ -83,7 +83,7 @@ module.exports = {
         goodsService.saveBrand(data).then(function(ret){
             res.jsonWrap(ret);
         }).catch(function(e){
-            //console.log(e);
+            console.log(e);
             res.jsonWrap(e,1,'操作失败');
         })
     }],
@@ -93,7 +93,7 @@ module.exports = {
         goodsService.deleteBrand(Id).then(function(ret){
             res.jsonWrap(ret);
         }).catch(function(e){
-            //console.log(e);
+            console.log(e);
             res.jsonWrap(e,1,'操作失败');
         })
     }],
@@ -104,7 +104,7 @@ module.exports = {
         goodsService.listCategory(pageLimit.page,pageLimit.limit,type,req.session.admin_login_info).then(function(ret){
             res.jsonWrap(ret);
         }).catch(function(e){
-            //console.log(e);
+            console.log(e);
             res.jsonWrap(e,1,'操作失败');
         })
     }],
@@ -114,7 +114,7 @@ module.exports = {
         goodsService.saveCategory(data,req.session.admin_login_info).then(function(ret){
             res.jsonWrap(ret);
         }).catch(function(e){
-            //console.log(e);
+            console.log(e);
             res.jsonWrap(e,1,'操作失败');
         })
     }],
@@ -124,7 +124,7 @@ module.exports = {
         goodsService.deleteCategory(Id).then(function(ret){
             res.jsonWrap(ret);
         }).catch(function(e){
-            //console.log(e);
+            console.log(e);
             res.jsonWrap(e,1,'操作失败');
         })
     }]

@@ -10,7 +10,7 @@ module.exports = {
         roleService.getAllRoles(req.session.admin_login_info,type).then(function (data) {
             res.jsonWrap(data);
         }).catch(function (msg) {
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(null, 1, msg);
         });
     }],
@@ -24,7 +24,7 @@ module.exports = {
         roleService.modifyRole(data).then(function (ret) {
             res.jsonWrap(ret);
         }).catch(function (err) {
-            //console.log(err);
+            console.log(err);
             res.jsonWrap(err, 1, '操作失败');
         });
     }],
@@ -33,7 +33,7 @@ module.exports = {
         roleService.getRoleById(req.session.admin_login_info.shop.RoleId).then(function (data) {
             res.jsonWrap(data);
         }).catch(function (msg) {
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(msg, 1, '服务器错误');
 
         })

@@ -9,7 +9,7 @@ module.exports = {
         menuService.readMenuYmal().then(function(data){
             res.jsonWrap(data);
         }).catch(function(err){
-            //console.log(err);
+            console.log(err);
             res.jsonWrap(null,1,err);
         });
     }]

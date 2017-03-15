@@ -9,7 +9,7 @@ var menuService = {
         return new Promise(function (resolve, reject) {
             var menus = await(menuService.readMenuYmal());
 
-            var user = await(db.shops.findOne({
+            var user = await(db().shops.findOne({
                 where: {Id: user_id}
             }));
 

@@ -11,7 +11,7 @@ module.exports = {
             // res.jsonWrap(req.session.admin_login_info);
             res.render('admin/admin.html',{data:data,account:req.session.admin_login_info.shop.MemberName});
         }).catch(function(error) {
-            //console.log(error);
+            console.log(error);
             res.jsonWrap(error,1,'服务器异常');
         });
     }],

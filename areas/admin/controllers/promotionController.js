@@ -13,7 +13,7 @@ module.exports = {
         promotionService.getPromotionList(pageLimit.page, pageLimit.limit, req.session.admin_login_info).then(function (data) {
             res.jsonWrap(data);
         }).catch(function (msg) {
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(msg, 1, '服务器错误');
         })
     }],
@@ -25,7 +25,7 @@ module.exports = {
         promotionService.savePromotion(data, req.session.admin_login_info).then(function (ret) {
             res.jsonWrap(ret);
         }).catch(function (msg) {
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(msg, 1, msg);
         })
     }],
@@ -37,7 +37,7 @@ module.exports = {
         promotionService.deletePromotion(id).then(function (ret) {
             res.jsonWrap(ret);
         }).catch(function (msg) {
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(msg, 1, '操作失败');
         })
     }],
@@ -48,7 +48,7 @@ module.exports = {
         promotionService.getPromotionDetail(id).then(function (ret) {
             res.jsonWrap(ret);
         }).catch(function (msg) {
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(msg, 1, '操作失败');
         })
     }],
@@ -60,7 +60,7 @@ module.exports = {
         promotionService.assistPromotionList(pageLimit.page,pageLimit.limit,keyword,req.session.admin_login_info).then(function (ret) {
             res.jsonWrap(ret);
         }).catch(function (msg) {
-            //console.log(msg);
+            console.log(msg);
             res.jsonWrap(msg, 1, '操作失败');
         })
     }]

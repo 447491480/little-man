@@ -6,7 +6,7 @@ var roleSelectService = require('./roleSelectService');
 module.exports = {
     getRoleById: function (roleId) {
         return new Promise(function (resolve, reject) {
-            db.roles.findOne({
+            db().roles.findOne({
                 where: {Id: roleId}
             }).then(function (data) {
                 resolve(data);
@@ -32,7 +32,7 @@ module.exports = {
                 }
             }
 
-            db.roles.findAll({
+            db().roles.findAll({
                 where: whereCase
             }).then(function (data) {
                 resolve(data);
@@ -44,7 +44,7 @@ module.exports = {
         var id = data.Id;
         delete data['Id'];
 
-        var ret = await(db.roles.update(data, {
+        var ret = await(db().roles.update(data, {
             where: {
                 Id: id
             }

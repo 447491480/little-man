@@ -12,7 +12,7 @@ module.exports = {
         reportService.orderStatistic(startTime,endTime,req.session.admin_login_info).then(function(data){
             res.jsonWrap(data);
         }).catch(function(err){
-            //console.log(err);
+            console.log(err);
             res.jsonWrap(null,1,err);
         });
     }]
