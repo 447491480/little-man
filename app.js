@@ -1,6 +1,7 @@
 // 载入常用nodejs模块
 var path = require('path');
 var fs = require('fs');
+var schedule = require('node-schedule');
 
 var configure = require('little-man-config');
 
@@ -165,6 +166,19 @@ var server = app.listen(app.get('port'), function () {
     var port = server.address().port;
     console.log('应用启动成功！访问地址： http://%s:%s', host, port);
 });
+
+// 初始化定时任务
+var taskDir = __dirname + '/tasks';
+fs.existsSync(taskDir) || fs.mkdirSync(taskDir);
+fs.readdirSync(taskDir)
+    .filter(function (file) {
+        return (path.extname(file) === '.js');
+    })
+    .forEach(function (file) {
+       var job = require(path.join(taskDir,file));
+       schedule.scheduleJob(job.cron,job.func);
+    });
+
 
 // 引入socket 服务端模块。如无需即时通讯，注释即可
 require(path.join(__dirname, 'utils', 'socket')).listen(server);

@@ -30,7 +30,7 @@ connections.forEach(function(conn){
 
     fs.readdirSync(model_dir)
         .filter(function (file) {
-            return (file.indexOf(".") !== 0);
+            return (path.extname(file) === '.js');
         })
         .forEach(function (file) {
             var model = conn.sequelize.import(path.join(process.cwd(), 'models',conn_name, file));

@@ -1,0 +1,10 @@
+/**
+ * Created by chang on 2017/3/16.
+ */
+module.exports = {
+    func:async(function() {
+        console.log('hello world');
+    }),
+
+    cron:'* * * * *'
+};
