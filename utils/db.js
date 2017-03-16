@@ -6,7 +6,6 @@ var configure = require('more-express-config');
 var Sequelize = require("sequelize");
 var config = configure.get('db');
 
-
 var connections = [];
 
 Object.keys(config).forEach(function(name) {
@@ -26,12 +25,15 @@ connections.forEach(function(conn){
     var conn_name = conn.name;
 
     var models = {};
-    fs.readdirSync(path.join(__dirname, config[conn_name].output,conn_name))
+    var model_dir = path.join(process.cwd(), 'models',conn_name);
+    fs.existsSync(model_dir) || fs.mkdirSync(model_dir);
+
+    fs.readdirSync(model_dir)
         .filter(function (file) {
             return (file.indexOf(".") !== 0);
         })
         .forEach(function (file) {
-            var model = conn.sequelize.import(path.join(__dirname, '..', 'models',conn_name, file));
+            var model = conn.sequelize.import(path.join(process.cwd(), 'models',conn_name, file));
             models[model.name]=model;
         });
 

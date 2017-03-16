@@ -8,7 +8,7 @@
     "port": "3306",
     "charset": "utf8mb4",
     "timezone": "+08:00",
-    "output": "../models",
+    "directory": "./models",
     "additional": {
       "timestamps": false,
       "freezeTableName": true

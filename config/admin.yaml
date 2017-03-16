@@ -1,4 +1,4 @@
-index_view: page/index_report.html                                   #-------首页视图模板
+index_view: page/system/admin_model_tools.html                                   #-------首页视图模板
 menus:
  - title: 业务
    nav_menu:
@@ -41,3 +41,6 @@ menus:
       third_menu:
        - {title: 企业信息,view: page/system/admin_enterprise_mgr.html,icon: ''}
        - {title: 修改密码,view: page/system/admin_reset_password.html,icon: ''}
+    - title: 系统工具
+      third_menu:
+       - {title: 模型工具,view: page/system/admin_model_tools.html,icon: ''}
