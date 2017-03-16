@@ -3,7 +3,7 @@
  */
 
 var sessionFilter = require('../../../filters/adminSessionFilter');
-var pageValidate = require('../../../services/common/pageValidate');
+var pagerService = require('../../../services/common/pagerService');
 var configure = require('more-express-config');
 var SequelizeAuto = require('sequelize-auto');
 var config = configure.get('db');
@@ -15,7 +15,7 @@ module.exports = {
 
     get_dbTables: [sessionFilter, function (req, res) {
         var name = req.query.name || 'default';
-        var pageLimit = pageValidate.requestFilter(req);
+        var pageLimit = pagerService.requestFilter(req);
         var keyword = req.query.keyword || '';
 
         db[name].sequelize.getQueryInterface().showAllTables().then(function (ret) {

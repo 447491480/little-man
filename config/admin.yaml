@@ -1,45 +1,12 @@
-index_view: page/system/admin_model_tools.html                                   #-------首页视图模板
+index_view: page/index.html                                   #-------首页视图模板
 menus:
- - title: 业务
-   nav_menu:
-    - title: 商品管理
-      third_menu:
-       - {title: 商品管理,view: page/biz/goods_mgr.html,icon: ''}
-       - {title: 分类管理,view: page/biz/goods_category_mgr.html,icon: ''}
-       - {title: 品牌管理,view: page/biz/goods_brand_mgr.html,icon: ''}
-       - {title: 我的分类,view: page/biz/my_category_mgr.html,icon: ''}
-    - title: 渠道管理
-      third_menu:
-       - {title: 客户管理,view: page/biz/member_mgr.html,icon: ''}
-       - {title: 供应商列表,view: page/biz/member_leader_list.html,icon: ''}
-    - title: 订单管理
-      third_menu:
-       - {title: 订单列表,view: page/biz/order_mgr.html,icon: ''}
-       - {title: 账期管理,view: page/biz/payment_days_mgr.html,icon: ''}
-    - title: 活动管理
-      third_menu:
-       - {title: 添加活动,view: page/biz/promotion_mgr.html,icon: ''}
-       - {title: 活动列表,view: page/biz/promotion_list.html,icon: ''}
-    - title: 新闻管理
-      third_menu:
-       - {title: 广告管理,view: page/biz/news_advert.html,icon: ''}
-       - {title: 新品管理,view: page/biz/news_arrival.html,icon: ''}
- - title: 报表
-   nav_menu:
-    - title: 业务报表
-      third_menu:
-       - {title: 交易数据统计,view: page/biz/goods_sell_report.html,icon: ''}
- - title: 后台管理
+ - title: 系统
    nav_menu:
     - title: 后台账号管理
       third_menu:
-       - {title: 地区管理,view: page/biz/region_mgr.html,icon: ''}
-       - {title: 部门管理,view: page/biz/organization_mgr.html,icon: ''}
-       - {title: 子账号管理,view: page/system/admin_subaccount_mgr.html,icon: ''}
-       - {title: 角色权限管理,view: page/system/admin_role_mgr.html,icon: ''}
-    - title: 资料维护
+       - {title: 后台用户管理,view: page/system/admin_user_mgr.html,icon: ''}
+    - title: 个人中心
       third_menu:
-       - {title: 企业信息,view: page/system/admin_enterprise_mgr.html,icon: ''}
        - {title: 修改密码,view: page/system/admin_reset_password.html,icon: ''}
     - title: 系统工具
       third_menu:

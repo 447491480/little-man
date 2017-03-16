@@ -1,4 +1,4 @@
-var configure = require('more-express-config');
+var configure = require('little-man-config');
 var log4js = require("log4js");
 
 exports.configure = function() {

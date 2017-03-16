@@ -12,7 +12,7 @@ layui.define(['commonUtil','ajaxUtil','logUtil'],function (exports) {
     controls.login_panel = $('#login_panel');
 
     var urls = {};
-    urls.login_check = '/admin/login/check-user-login';
+    urls.login_check = '/admin/user/check-user-login';
     urls.page_index = '/admin/page/index';
 
     function init() {

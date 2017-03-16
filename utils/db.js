@@ -2,7 +2,7 @@
 
 var fs = require("fs");
 var path = require("path");
-var configure = require('more-express-config');
+var configure = require('little-man-config');
 var Sequelize = require("sequelize");
 var config = configure.get('db');
 

@@ -2,7 +2,7 @@
 var path = require('path');
 var fs = require('fs');
 
-var configure = require('more-express-config');
+var configure = require('little-man-config');
 
 // 载入app配置文件
 var app_config = configure.get('app');

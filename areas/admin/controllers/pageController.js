@@ -6,10 +6,10 @@ var sessionFilter = require('../../../filters/adminSessionFilter');
 
 module.exports = {
     get_index: [sessionFilter,function (req, res) {
-        menuService.getUserMenu(req.session.admin_login_info.shop.Id).then(function (data) {
+        menuService.getUserMenu(req.session.admin_login_info.id).then(function (data) {
             // res.jsonWrap(data);
             // res.jsonWrap(req.session.admin_login_info);
-            res.render('admin/admin.html',{data:data,account:req.session.admin_login_info.shop.MemberName});
+            res.render('admin/admin.html',{data:data,account:req.session.admin_login_info.account});
         }).catch(function(error) {
             console.log(error);
             res.jsonWrap(error,1,'服务器异常');

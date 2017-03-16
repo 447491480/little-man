@@ -3,7 +3,7 @@
     "username": "",
     "password": "",
     "database": "",
-    "host": "120.26.87.71",
+    "host": "",
     "dialect": "mysql",
     "port": "3306",
     "charset": "utf8mb4",
