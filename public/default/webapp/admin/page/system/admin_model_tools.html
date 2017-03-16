@@ -73,7 +73,7 @@
 
             // 切换数据源
             form.on('select(db-select-filter)',function(data){
-                refresh({name:data.value,page:1});
+                refresh({name:data.value,page:1,keyword:''});
             });
 
             // 查询
