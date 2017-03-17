@@ -10,14 +10,14 @@ var crypto = require('crypto');
 var utf8 = require('utf8');
 var uuidV1 = require('uuid/v1');
 
-var UCloudPublicKey = "7WDb72kZd7R7WczUzzcoASG/ACkVECbGAj1NPpTXfSQzwUrFApCASg==";
-var UCloudPrivateKey = "b82ad13233fe3a7c174d34c3a1d416355a87258b";
+var UCloudPublicKey = "todo";
+var UCloudPrivateKey = "todo";
 var HTTPVerb = "POST";
 var ContentMD5 = "";
 
 var MyDate = "";
 var CanonicalizedUCloudHeaders = "";
-var bucket = "qiaqiavip";
+var bucket = "todo";
 
 
 function Base64(content) {
