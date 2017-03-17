@@ -1,6 +1,6 @@
 {
   "name": "little-man",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "yoursfengzhilian",
   "description": "node.js mvc base express",
   "keywords": [
@@ -14,8 +14,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": "NODE_ENV=dev pm2 start app.js --watch --node-args='--harmony' --name 'qiaqia_manager'",
-    "start": "NODE_ENV=prod pm2 start app.js -i max --node-args='--harmony' --name 'qiaqia_manager'"
+    "test": "NODE_ENV=dev pm2 start app.js --watch --node-args='--harmony' --name 'little-man'",
+    "start": "NODE_ENV=prod pm2 start app.js -i max --node-args='--harmony' --name 'little-man'"
   },
   "dependencies": {
     "asyncawait": "^1.0.6",
