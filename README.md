@@ -13,6 +13,7 @@
 ##### 10，支持图片验证码
 ##### 11，支持websocket
 ##### 12，支持ucloud 文件上传
+##### 13，支持async,await（依赖asyncawait包）
 
 
 [详细使用方式请移步wiki](https://github.com/447491480/little-man/wiki)
