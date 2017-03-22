@@ -9,15 +9,15 @@ module.exports = function(sequelize, DataTypes) {
 			autoIncrement: true
 		},
 		account: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(50),
 			allowNull: true
 		},
 		password: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(50),
 			allowNull: true
 		},
 		type: {
-			type: DataTypes.INTEGER(3),
+			type: DataTypes.INTEGER(3).UNSIGNED,
 			allowNull: true
 		},
 		rights: {
