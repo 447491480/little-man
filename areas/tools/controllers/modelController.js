@@ -4,7 +4,7 @@
 
 var sessionFilter = require('../../../filters/adminSessionFilter');
 var pagerService = require('../../../services/common/pagerService');
-var configure = require('more-express-config');
+var configure = require('little-man-config');
 var SequelizeAuto = require('sequelize-auto');
 var config = configure.get('db');
 
