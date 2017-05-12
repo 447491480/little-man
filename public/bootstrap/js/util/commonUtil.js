@@ -90,8 +90,12 @@ define(function(require,exports) {
 
 
 
-    commonUtil.toast = function(msg) {
-        layer.msg(msg,{offset:'300px',time:2000});
+    commonUtil.toast = function (msg) {
+        if(typeof msg !== 'string') {
+            msg = JSON.stringify(msg);
+        }
+
+        layer.msg(msg, {offset: '300px', time: 2000});
     };
 
     commonUtil.uuidFast = function() {

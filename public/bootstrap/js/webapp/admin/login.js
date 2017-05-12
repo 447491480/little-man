@@ -3,8 +3,8 @@
  */
 define(function(require,exports) {
     var ajaxUtil = require('util/ajaxUtil').ajaxUtil;
-    var logUtil = require('util/ajaxUtil').logUtil;
-    var commonUtil = require('util/ajaxUtil').commonUtil;
+    var logUtil = require('util/logUtil').logUtil;
+    var commonUtil = require('util/commonUtil').commonUtil;
 
     var controls = {};
     controls.login_btn = $('#login_btn');
