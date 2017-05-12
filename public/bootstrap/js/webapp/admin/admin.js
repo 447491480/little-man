@@ -28,9 +28,8 @@ define(function(require,exports) {
     }
 
     function bindEvent() {
-        $('#navigation_left').find('.menu-text').bind('click',function() {
-            var _self = this;
-            var page = $(_self).data('url');
+        $('#navigation_left').find('li>a').bind('click',function() {
+            var page = $(this).find('.menu-text:eq(0)').data('url');
 
             if(!page) return;
 
