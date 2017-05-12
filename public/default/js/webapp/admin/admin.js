@@ -23,7 +23,7 @@ layui.define(['form','element', 'layer', 'ajaxUtil', 'logUtil', 'commonUtil'], f
     var urls = {};
     urls.get_page_part = '/admin/page/get-part';
     urls.get_update_session = '/admin/page/update-session';
-    urls.get_menu = './?_m=/admin/menu/getMenu';
+    urls.get_logout = '/admin/page/logout';
 
     var G_MAX_TAB = 7;
 
@@ -72,7 +72,6 @@ layui.define(['form','element', 'layer', 'ajaxUtil', 'logUtil', 'commonUtil'], f
                 $('#admin-body').animate({left: '200px'});
                 $('#admin-side').animate({width: '200px'});
             }
-
         });
 
         //手机设备的简单适配
@@ -160,6 +159,12 @@ layui.define(['form','element', 'layer', 'ajaxUtil', 'logUtil', 'commonUtil'], f
                 }
             });
         });
+
+        $("#logout").bind('click',function() {
+            ajaxUtil.doAjaxGet(urls.get_logout,{}).done(function(ret) {
+                window.location.reload();
+            })
+        })
     }
 
     function updateSession() {

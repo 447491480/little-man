@@ -10,10 +10,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
 
-    <link rel="stylesheet" href="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/css/layui.css" media="all">
-    <link rel="stylesheet" href="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/css/global.css" media="all">
-    <link rel="stylesheet" href="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/css/modules/layer/default/layer.css" media="all">
+    <link rel="stylesheet" href="/<%= _locals.setting.__ADMIN_STATIC__ %>/css/layui.css" media="all">
+    <link rel="stylesheet" href="/<%= _locals.setting.__ADMIN_STATIC__ %>/css/global.css" media="all">
+    <link rel="stylesheet" href="/<%= _locals.setting.__ADMIN_STATIC__ %>/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/<%= _locals.setting.__ADMIN_STATIC__ %>/css/modules/layer/default/layer.css" media="all">
     <link rel="stylesheet" href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/nprogress/nprogress.css">
     <link rel="stylesheet" href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/jqgrid/ui.jqgrid.css">
     <link rel="stylesheet" href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/jquery.ui/jquery-ui-1.10.4.custom.min.css">
@@ -164,7 +164,7 @@
         <!--头部-->
         <div class="layui-main" style="margin:0;height: 59px;border-bottom: 1px solid #FD7E2C;">
             <a href="javascript:;" class="admin-login-box">
-                <img src="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/images/logo-lt.png" alt=""
+                <img src="/<%= _locals.setting.__ADMIN_STATIC__ %>/images/logo-lt.png" alt=""
                      style="display: inline-block;float: left;height: 56px;">
                 <span style="display: block;float: left;line-height: 60px;margin-left: 10px;font-size: 18px;font-weight: bold;"><%= _locals.setting.ADMIN_WEB_NAME %></span>
             </a>
@@ -175,7 +175,7 @@
                     </a>
                 </li>
                 <li class="layui-nav-item" style="margin: 0;">
-                    <a href="/admin/page/logout" style="font-size: 12px;color: #828080;">退出</a>
+                    <a id="logout" href="javascript:;" style="font-size: 12px;color: #828080;">退出</a>
                 </li>
             </ul>
         </div>
@@ -253,7 +253,7 @@
 <script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/jquery.ui/jquery-ui-1.10.4.custom.min.js"></script>
 <!--<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/echarts/echarts.simple.min.js"></script>-->
 <script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/highchats/highcharts.js"></script>
-<script src="/<%= _locals.setting.__LAYUI_ADMIN_STATIC__ %>/layui.js"></script>
+<script src="/<%= _locals.setting.__ADMIN_STATIC__ %>/layui.js"></script>
 
 <script>
     layui.config({
