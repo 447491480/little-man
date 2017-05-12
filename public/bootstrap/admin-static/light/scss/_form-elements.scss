@@ -1,0 +1,72 @@
+/*
+Form elements style
+*/
+.form-control,input,textarea,select {
+    border: 1px solid rgba(197,214,222,.7);
+    @include box-shadow(none);
+    font-size: 1.2rem;
+    color: #343434!important;
+}
+.input-group-addon{
+   border-color: rgba(197,214,222,.7);
+   label{
+       margin-bottom: 0px;
+       padding-left: 0px!important;
+   }
+   .checkbox{
+       margin: 0px;
+       label{
+           min-height: 10px;
+       }
+   }
+ 
+}
+   .checkbox{
+       margin-top: -2px;
+       label{
+           padding-left: 10px;
+       }
+   }
+.form-control,
+.form-control:focus,
+.input-error .form-control:focus,
+.input-success .form-control:focus,
+.input-warning .form-control:focus, 
+.navbar-collapse,
+.navbar-form,
+.navbar-form-custom .form-control:focus,
+.navbar-form-custom .form-control:hover,
+.open .btn.dropdown-toggle,
+.panel,
+.popover,
+.progress, 
+.progress-bar{
+    @include box-shadow(none);
+}
+.input-error{
+    border-color: $color-danger;
+}
+.input-success{
+    border-color: $color-success;
+}
+.input-warning{
+    border-color: $color-warning;
+}
+
+
+.help-block {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    color: #737373;
+    font-size: 12px;
+}
+
+/**dropzone image location**/
+.dropzone .dz-default.dz-message{
+        background-image: url("../images/spritemap.png");
+}
+
+.note-editor.note-frame {
+    border: 0px;
+}

@@ -1,0 +1,60 @@
+/*
+Top bar styles
+*/
+
+.top-search{
+    form{
+        position: relative;
+        width:180px;
+        margin-left:10px;
+        .form-control{
+            border: 0px;
+            @include border-radius(0px);
+            @include box-shadow(none);
+            height: 50px;
+            line-height: 50px;
+            background-color: #fff;
+        }
+        i{
+            position: absolute;
+            top: 5%;
+            right: 10px;
+        }
+    }
+}
+
+.hoe-right-header ul > li{ 
+    margin-right:15px;
+      img{
+        margin-right: 5px;
+    }
+    >a {
+       color: #999;
+    line-height: 50px;
+    display: block;
+    padding:0px 10px;
+    &:hover,&:focus{
+        background: #f5f5f5;
+    text-decoration: none;
+    color:$color-primary;
+    }
+}
+}
+.hoe-right-header .right-navbar{
+    margin-right: 0px;
+    padding-right: 0px !important;
+}
+
+.hoe-right-header .right-navbar>li{
+    vertical-align: middle;
+}
+.hoe-right-header .right-navbar>li>a i{
+    font-size: 25px;
+    display: block;
+}
+.hoe-right-header .right-navbar>li>a .label{
+    margin-top:0px;
+    position: absolute;
+    right: 3px;
+    top: 7px;
+}

@@ -1,0 +1,28 @@
+/*
+Pagination buttons
+*/
+
+/*data tables pagination*/
+.paginate_button{
+    display: inline-block;
+    line-height: 24px;
+    padding: 0px 15px;
+    background-color: #f5f5f5;
+    margin: 2px;
+    font-size: 14px;
+    font-weight: 700;
+    color: $color-primary;
+    cursor:pointer;
+    &:hover{
+         color: #fff;
+        background-color: $color-primary;
+    }
+    &.current{
+        color: #fff;
+        background-color: $color-primary;
+        cursor: default;
+    }
+    &.disabled{
+        cursor: default;
+    }
+}

@@ -1,0 +1,73 @@
+/*
+Mail Pages
+*/
+.inbox-nav{
+    li{
+        vertical-align: middle;
+        a{
+            display: block;
+            padding: 5px 15px;
+            color: #666;
+            @include border-radius(3px);
+            margin-top:3px;
+            text-transform:capitalize;
+            i{
+                vertical-align: middle;
+                margin-right: 10px;
+                font-size: 16px;
+                display: inline-block;
+            }
+            .label-circle{
+                margin-right: 10px;
+            }
+            &:hover{
+                background-color: #ebebeb;              
+            }
+        }
+        &.active a{
+            background-color:  $bg-primary;
+            color:#fff;
+        }
+    }
+}
+
+.mail-header{
+    h3{
+       font-weight: 400; 
+       margin-bottom: 0px;
+    }
+}
+.mail-open-header{
+    margin-bottom: 0px;
+    color: #000;
+}
+.mail-body{
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+.file-box {
+    float: left;
+    width: 220px;
+}
+.file {
+    border: 1px solid #e7eaec;
+    padding: 0;
+    background-color: #ffffff;
+    position: relative;
+    margin-bottom: 20px;
+    margin-right: 20px;
+     .file-name {
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #e7eaec;
+}
+.icon {
+    padding: 15px 10px;
+    text-align: center;
+    height: 90px;
+    i {
+    font-size: 70px;
+    color: #dadada;
+}
+}
+}

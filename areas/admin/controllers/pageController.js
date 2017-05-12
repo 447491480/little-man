@@ -26,11 +26,11 @@ module.exports = {
 
     get_logout : function (req, res) {
         req.session.admin_login_info = null;
-        res.redirect('/admin/page/login')
+        res.jsonWrap();
     },
 
-    get_getPart : [sessionFilter, function (req, res) {
-        var page = req.query.page;
+    post_getPart : [sessionFilter, function (req, res) {
+        var page = req.body.page;
         res.render('admin/'+page);
     }],
 

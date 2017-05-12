@@ -1,0 +1,52 @@
+/*
+Tables styles
+*/
+@media(min-width:567px){
+    .dataTables_length{
+        width: 50%;
+        float: left;
+    }
+}
+.table.table-maillist{
+   >tobdy>tr>td{
+        vertical-align: middle;
+        border-top: 0px;
+        padding: 12px;
+    }
+    .checkbox{
+        margin: 0px;
+    }
+    a{
+        color:#D8DADA;
+    }
+}
+.table-striped tbody>tr:nth-child(2n+1)>td, .table-striped tbody>tr:nth-child(2n+1)>th {
+    background-color: #444351;
+    border: none;
+}
+.table-striped{
+    &.table>tbody>tr>td,
+    &.table>tbody>tr>th, 
+    &.table>tfoot>tr>td, 
+    &.table>tfoot>tr>th,
+    &.table>thead>tr>td, 
+    &.table>thead>tr>th{
+    border:0px;
+}
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+    padding: 10px 12px;
+     border-top-color: rgba(255,255,255,0.1);
+}
+.table th[align=center] {
+    text-align: center;
+}
+.table-bordered,.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th{
+    border-color: rgba(255,255,255,0.1);
+}
+.table>thead>tr>th{
+    border-bottom-color: rgba(255,255,255,0.1);
+}
+.table-hover>tbody>tr:hover {
+    background-color:  #444351;
+}

@@ -172,7 +172,7 @@ layui.define(['commonUtil','logUtil','layer'],function(exports) {
         NProgress.start();
         var def = $.Deferred();
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: url,
             data:data,
             success: function (msg) {

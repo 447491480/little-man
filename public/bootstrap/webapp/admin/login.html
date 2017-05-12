@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title><%= _locals.setting.ADMIN_WEB_NAME %>-登录页</title>
+
+    <!-- Bootstrap -->
+    <link href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--side menu plugin-->
+    <link href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/hoe-nav/hoe.css" rel="stylesheet">
+    <!-- icons-->
+    <link href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/iCheck/custom.css" rel="stylesheet">
+    <!--template custom css file-->
+    <link href="/<%= _locals.setting.__ADMIN_STATIC__ %>/css/style.css" rel="stylesheet">
+
+    <script src="/<%= _locals.setting.__ADMIN_STATIC__ %>/js/modernizr.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<div class="page-center">
+    <div class="page-center-in">
+        <form class="sign-box" id="login_panel">
+            <div class="sign-avatar">
+                <img src="/<%= _locals.setting.__ADMIN_STATIC__ %>/images/logo.png" alt="" style="width: 215px;">
+            </div>
+            <header class="sign-title"><%= _locals.setting.ADMIN_WEB_NAME %></header>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="账号">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="密码">
+            </div>
+            <!--<div class="form-group clearfix">-->
+            <!--<div class="checkbox pull-left">-->
+            <!--<input type="checkbox" id="myCheckbox" name="myCheckbox" class="i-checks">-->
+            <!--<label for="myCheckbox">Remember Me </label>-->
+            <!--</div>-->
+            <!--<div class="pull-right">-->
+            <!--<p><a href="javascript:;">Reset Password</a></p>-->
+            <!--</div>-->
+            <!--</div>-->
+            <button id="login_btn" type="submit" class="btn btn-success rounded btn-lg">立即登录</button>
+            <hr>
+            <!--<p>Don't have an account? <a href="page-register.html">Sign up</a></p>-->
+        </form>
+    </div><!--page center in-->
+</div><!--page center-->
+
+<!--Common plugins-->
+<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/jquery/jquery.min.js"></script>
+<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/bootstrap/js/bootstrap.min.js"></script>
+<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/hoe-nav/hoe.js"></script>
+<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/pace/pace.min.js"></script>
+<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/<%= _locals.setting.__ADMIN_STATIC__ %>/js/app.js"></script>
+<!-- iCheck -->
+<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/iCheck/icheck.min.js"></script>
+
+<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/layer/layer.js"></script>
+<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/sea.js"></script>
+<script>
+    seajs.config({
+        alias: {},
+        debug: 0
+        // 0: 只输出少量信息 1：输出大量信息 2：对已加载的文件不进行缓存
+    });
+    seajs.use('webapp/admin/login.js?'+Math.random(), function (i) {
+        i.init();
+    });
+</script>
+</body>
+</html>

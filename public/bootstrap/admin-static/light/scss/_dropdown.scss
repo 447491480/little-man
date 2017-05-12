@@ -1,0 +1,129 @@
+/*
+=================
+Drop down menu styles
+==================
+*/
+.dropdown-menu{
+    @include border-radius(0px);
+    padding: 0px;
+    background-color: #fff;
+    text-transform: capitalize;
+    font-size: 13px;
+    @include box-shadow(5px 5px rgba(0,0,0,0.1));
+}
+.dropdown-menu-scale {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    @include transform(scale(.8));
+    @include transition(all 250ms cubic-bezier(.24,.22,.015,1.56));
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+    pointer-events: none;
+}
+
+.open>.dropdown-menu-scale {
+    opacity: 1;
+    visibility: visible;
+    @include transform(scale(1));
+    pointer-events: auto;
+    display: block!important;
+}
+.hoe-right-header li .dropdown-menu>li{
+    display: block;
+    float: none;
+}
+.user-dropdown{
+    li{
+        vertical-align:middle;
+        i{
+            margin-right: 5px;
+            display: inline-block;
+        }
+        .label{
+            margin-left: 5px;
+        }
+    }
+}
+.lang-dropdown{    
+    img{
+        margin-right: 5px;
+    }
+}
+.hoe-right-header ul.dropdown-menu{
+    &.lg-dropdown{
+        min-width: 320px;
+    }
+}
+.hoe-right-header ul.dropdown-menu>li{
+    margin-right: 0px;
+}
+.hoe-right-header ul.dropdown-menu>li>a{
+    display: block;
+    padding: 9px 20px;
+    line-height: auto;
+    font-size: 13px;
+    text-transform: capitalize;
+    line-height: 14px;
+}
+/**notifications dropdown*/
+.notifications.dropdown-menu{
+    p{
+        margin: 0px;
+        padding: 10px 20px;
+        line-height:15px;
+        font-size:12px;
+        border-bottom:1px solid #eee;
+        a{
+            float: right;
+            padding: 0px;
+            font-size: 12px;
+            line-height: 12px;
+            color: $color-danger;
+            &:hover{
+                color:#999;
+                background-color: transparent;
+            }
+        }
+    }
+    li{
+        border-bottom:1px solid #eee;
+        i{
+            font-size: 25px;
+            color:#999;
+        }
+        span{
+            display:block;
+            &.small-line{
+                color: #777;
+                font-size: 11px;
+                line-height: 11px;
+                margin-top: 4px;
+                font-style: italic;
+            }
+        }
+        a{
+            &:hover{
+                i,.line{
+                    color: $color-primary;
+                }
+            }
+        }
+        &.unread-notifications{
+            a{
+                 i{
+                color:#000;
+            }
+            .line{
+                color:#000;
+            }
+            &:hover{
+                i,.line{
+                    color: $color-primary;
+                }
+            }
+            }
+        }
+    }
+}

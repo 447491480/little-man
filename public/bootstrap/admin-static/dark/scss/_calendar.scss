@@ -1,0 +1,44 @@
+/*
+Calendar style
+*/
+.fc-event {
+    color: #d8dada;
+    cursor: move;
+    margin: 10px 0;
+    padding: 6px 10px;
+    @include border-radius(0px);
+    background-color: $bg-primary;
+    border:0;
+}
+.fc-toolbar h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+.fc-state-default.fc-corner-left,.fc-state-default.fc-corner-right{
+    @include border-radius(0px);
+}
+.fc-state-default{
+    text-transform: capitalize;
+    background-color: rgba(0,0,0,0.5);
+    background-image: none;
+    border: 0px;
+    text-shadow: none;
+    color:#d8dada;
+    @include border-radius(0px);
+}
+.fc .fc-button-group > * {
+    margin: 0px 7px 0 -1px;
+}
+.fc-state-down, .fc-state-active,.fc-state-default:hover{
+    background-color: $bg-primary;
+    color: #fff;
+    text-shadow: none;
+    @include box-shadow(none);
+}
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-content, .fc-unthemed .fc-popover{
+    border-color:rgba(255,255,255,0.1);
+}
+.fc-unthemed .fc-today{
+    background-color: rgba(0,0,0,0.2);
+}

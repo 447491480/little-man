@@ -1,0 +1,36 @@
+/*
+Side navigation styles
+*/
+#hoeapp-wrapper{
+    font-family: $default-font;
+}
+#hoe-left-panel .panel-list > li > a,#hoe-left-panel .panel-list ul.hoe-sub-menu li > a{
+    padding: 8px 10px;
+}
+body #hoe-left-panel .panel-list > li.hoe-has-menu > ul.hoe-sub-menu,body #hoe-left-panel .panel-list > li.hoe-has-menu.opened > ul > li.hoe-has-menu.opened > ul {
+    box-shadow: none!important;
+}
+.hoe-sidebar-toggle a:after,#hoeapp-wrapper[hoe-device-type="phone"] .hoe-left-header .hoe-sidebar-toggle a::after{
+        content: "\f130";
+        font-family: 'Ionicons';
+        font-size: 28px;
+}
+#hoe-left-panel .panel-list > li.hoe-has-menu > a:after{
+        content: "\f3d0";
+        font-family: 'Ionicons';
+}
+#hoe-left-panel .panel-list > li.hoe-has-menu > ul.hoe-sub-menu > li > a span.menu-text:before{
+    content: "\f111";
+    font-size: 6px;
+}
+.hoe-left-header{
+    background-color: $bg-primary;
+}
+#hoe-left-panel .panel-list ul.hoe-sub-menu li > a{
+    text-transform: capitalize;
+}
+#hoe-left-panel .panel-list > li > a{
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 14px;
+}

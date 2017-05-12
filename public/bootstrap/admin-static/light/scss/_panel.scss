@@ -1,0 +1,96 @@
+/*
+Panel style
+*/
+.panel{
+    @include border-radius(0px);
+    @include box-shadow(none);
+    border:0;
+    .panel-heading{
+        @include border-radius(0px);
+        border-bottom:0px;
+        padding: 15px;
+        position: relative;
+        .panel-title{
+            font-weight: 600;
+            margin-bottom: 0px;
+            text-transform: capitalize;
+            color: #000;
+            .helping-text{
+                font-weight: 400;
+                font-size: 12px;
+                display: inline-block;
+                margin-left: 5px;
+                color: #999;
+            }
+        }
+        .panel-actions {
+            right: 10px;
+            position: absolute;
+            top: 12px;
+            >a{
+                font-size: 15px;
+                display: block;
+                float: left;
+                    color: #adb7be;
+                margin: 0px 7px;
+                i{
+                    display: block;
+                }
+                &:hover{
+                    color: $color-primary;
+                }
+            }
+            .dropdown > a{
+                font-size: 15px;
+                 color: #adb7be;
+                 display:block;
+                 padding: 0px 7px;
+                 &:hover{
+                    color: $color-primary;
+                }
+            }
+            .dropdown-menu{
+                right: 0;
+                left: auto;
+                >li>a{
+                    font-size: 13px;
+                    &:hover{
+                    color: $color-primary;
+                }
+                }
+            }
+        }
+        .panel-subtitle {
+            color: #808697;
+            font-size: 12px;
+            line-height: 1.2em;
+            margin: 7px 0 0;
+            padding: 0;
+        }
+    }
+}
+.panel-action-toggle, .panel-action-dismiss{
+    font-family: 'IonIcons';
+}
+.panel-collapsed .panel-action-toggle:before {
+    content: "\f218";
+}
+.panel-action-toggle:before {
+    content: "\f209";
+}
+.panel-action-dismiss:before {
+    content: "\f12a";
+}
+
+.panel-search{
+    float: right;
+    .form-panel-search{
+        position: relative;
+        top: -8px;
+        i{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+    }
+}

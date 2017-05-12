@@ -1,0 +1,48 @@
+/**
+ * Created by Administrator on 2016/9/18.
+ */
+define(function(require,exports) {
+    var ajaxUtil = require('util/ajaxUtil').ajaxUtil;
+    var logUtil = require('util/ajaxUtil').logUtil;
+    var commonUtil = require('util/ajaxUtil').commonUtil;
+
+    var controls = {};
+    controls.page_node=$('#page-wrapper');
+
+    var urls = {};
+    urls.get_page_part = '/admin/page/get-part';
+    urls.get_update_session = '/admin/page/update-session';
+    urls.get_menu = './?_m=/admin/menu/getMenu';
+
+    function init() {
+        bindEvent();
+        initIndex();
+        updateSession();
+    }
+
+    function initIndex() {
+        var index = $('#navigation_left').find('.menu-text:eq(0)').data('url');
+        if(index) {
+            ajaxUtil.doAjaxLoad(controls.page_node,urls.get_page_part,{page:index});
+        }
+    }
+
+    function bindEvent() {
+        $('#navigation_left').find('.menu-text').bind('click',function() {
+            var _self = this;
+            var page = $(_self).data('url');
+
+            if(!page) return;
+
+            ajaxUtil.doAjaxLoad(controls.page_node,urls.get_page_part,{page:page});
+        });
+    }
+
+    function updateSession() {
+        setInterval(function(){
+            ajaxUtil.doAjaxGet(urls.get_update_session,null);
+        },1000*60*60*2);
+    }
+
+    exports.init = init;
+});

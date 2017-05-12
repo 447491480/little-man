@@ -1,0 +1,83 @@
+/*
+
+Project      : Assan admin - Clean and simple admin template
+Version      : v1.0
+Author       : Design_mylife (Rakesh Sharma)
+Support email: mylifedesign143@gmail.com
+*/
+/**************************************
+
+
+/***** Google fonts import ************/
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700italic,700,600italic,600,400italic,300italic,900);
+
+
+//shortcodes style
+@import "_variables.scss";
+@import "_mixins.scss";
+@import "_base.scss";
+@import "_buttons.scss";
+@import "_topbar.scss";
+@import "_dropdown.scss";
+@import "_tabs.scss";
+@import "_side-navbar.scss";
+@import "_widget-boxes.scss";
+@import "_panel.scss";
+@import "_pace.scss";
+@import "_form-elements.scss";
+@import "_pagination.scss";
+@import "_tables.scss";
+@import "_calendar.scss";
+@import "_user-profile.scss";
+@import "_gallery.scss";
+@import "_mail_pages.scss";
+@import "_charts.scss";
+@import "_footer.scss";
+
+
+
+
+
+/*****===========================================
+
+RESPONSIVE style
+
+===========================================********************/
+
+@media(max-width:767px){
+    .mail-header {
+        text-align: center;
+        h3{
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    .pull-right{
+        float: none!important;
+    }
+    }
+    
+    .tooltip-show{
+        margin-top: 15px;
+    }
+    .hoe-right-header ul.dropdown-menu{
+        right: 0;
+        left: auto;
+    }
+    .hoe-right-header ul.dropdown-menu.lg-dropdown{
+        width: 285px;
+        min-width: 285px;
+        left: 0;
+        right: auto;
+    }
+    .notifications.dropdown-menu p a{
+        font-size: 9px;
+        line-height: 18px;
+    }
+    .tabs-bordered li a{
+        padding: 8px 8px;
+        font-size: 11px;
+    }
+    .hoe-sidebar-toggle a:after,#hoeapp-wrapper[hoe-device-type="phone"] .hoe-left-header .hoe-sidebar-toggle a::after{
+        color: #fff;
+    }
+}
