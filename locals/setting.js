@@ -4,7 +4,7 @@ var theme = configure.get("app")['default_theme'] || "default";
 
 var sub_theme = "";
 if(theme === "bootstrap") {
-    sub_theme = "/dark"
+    sub_theme = "/light"
 }
 
 module.exports = {
