@@ -1,7 +1,7 @@
 /**
  * Created by jhzhang on 2017/5/12.
  */
-layui.use(['form', 'ajaxUtil','commonUtil'], function () {
+define(function(require,exports) {
     var form = layui.form();
     var ajaxUtil = layui.ajaxUtil;
     var commonUtil = layui.commonUtil;
