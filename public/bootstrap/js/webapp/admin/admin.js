@@ -45,6 +45,12 @@ define(function(require,exports) {
 
             $(window).bind("onresize", this);
         }).resize();
+
+        $('.hoe-sidebar-toggle').bind('click',function() {
+            $(".jqgrid-table").each(function() {
+                $(this).setGridWidth(controls.page_node.width(), true);
+            });
+        });
     }
 
     function updateSession() {
