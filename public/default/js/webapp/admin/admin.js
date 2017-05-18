@@ -162,7 +162,9 @@ layui.define(['form','element', 'layer', 'ajaxUtil', 'logUtil', 'commonUtil'], f
 
         $("#logout").bind('click',function() {
             ajaxUtil.doAjaxGet(urls.get_logout,{}).done(function(ret) {
-                window.location.reload();
+                setTimeout(function(){
+                    window.location.reload();
+                },200)
             })
         })
     }

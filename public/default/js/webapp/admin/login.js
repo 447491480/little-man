@@ -38,7 +38,9 @@ layui.define(['commonUtil','ajaxUtil','logUtil'],function (exports) {
                 commonUtil.toast(ret.msg);
                 resetInput();
                 if (ret.status == 0) {
-                    window.location.href = urls.page_index;
+                    setTimeout(function(){
+                        window.location.href = urls.page_index;
+                    },200)
                 }
 
             });

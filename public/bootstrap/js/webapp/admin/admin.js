@@ -12,7 +12,7 @@ define(function(require,exports) {
     var urls = {};
     urls.get_page_part = '/admin/page/get-part';
     urls.get_update_session = '/admin/page/update-session';
-    urls.get_menu = './?_m=/admin/menu/getMenu';
+    urls.get_logout = '/admin/page/logout';
 
     function init() {
         bindEvent();
@@ -51,6 +51,14 @@ define(function(require,exports) {
                 $(this).setGridWidth(controls.page_node.width(), true);
             });
         });
+
+        $("#logout").bind('click',function() {
+            ajaxUtil.doAjaxGet(urls.get_logout,{}).done(function(ret) {
+                setTimeout(function(){
+                    window.location.reload();
+                },200)
+            })
+        })
     }
 
     function updateSession() {
