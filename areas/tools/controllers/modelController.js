@@ -6,6 +6,7 @@ var sessionFilter = require('../../../filters/adminSessionFilter');
 var pagerService = require('../../../services/common/pagerService');
 var configure = require('little-man-config');
 var SequelizeAuto = require('sequelize-auto');
+var path = require('path');
 var config = configure.get('db');
 
 module.exports = {
@@ -37,11 +38,12 @@ module.exports = {
 
     post_genModels: [sessionFilter, function (req, res) {
         var name = req.body.name || 'default';
+
         config[name]['tables']= JSON.parse(req.body.tables || '[]');
 
         if(config[name]['tables'].length<=0) delete config[name]['tables'];
 
-        config[name]['directory'] = config[name]['directory']+'/'+name;
+        config[name]['directory'] = path.join(process.cwd(),'models',name);
 
         var auto = new SequelizeAuto(config[name].database, config[name].username, config[name].password, config[name]);
 

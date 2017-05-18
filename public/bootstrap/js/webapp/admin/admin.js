@@ -35,6 +35,16 @@ define(function(require,exports) {
 
             ajaxUtil.doAjaxLoad(controls.page_node,urls.get_page_part,{page:page});
         });
+
+        $(window).on('resize', function () {
+            $(window).unbind("onresize");
+
+            $(".jqgrid-table").each(function() {
+                $(this).setGridWidth(controls.page_node.width(), true);
+            });
+
+            $(window).bind("onresize", this);
+        }).resize();
     }
 
     function updateSession() {

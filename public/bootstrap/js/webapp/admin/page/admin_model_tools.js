@@ -2,9 +2,9 @@
  * Created by jhzhang on 2017/5/12.
  */
 define(function(require,exports) {
-    var form = layui.form();
-    var ajaxUtil = layui.ajaxUtil;
-    var commonUtil = layui.commonUtil;
+    var ajaxUtil = require('util/ajaxUtil').ajaxUtil;
+    var logUtil = require('util/logUtil').logUtil;
+    var commonUtil = require('util/commonUtil').commonUtil;
 
     var urls = {};
     urls.get_connetion_list = '/tools/model/connection-list';
@@ -17,7 +17,6 @@ define(function(require,exports) {
 
 
     function init() {
-        form.render();
         loadModelData();
         initSelect();
         bindEvent();
@@ -40,13 +39,13 @@ define(function(require,exports) {
         }, '.biz-model-create');
 
         // 切换数据源
-        form.on('select(db-select-filter)',function(data){
-            refresh({name:data.value,page:1,keyword:''});
+        controls.db_select.on('change',function(){
+            refresh({name:$(this).val(),page:1,keyword:''});
         });
 
         // 查询
         controls.system_model_tools_panel.find('button:eq(0)').bind('click',function(){
-            var keyword = $.trim($(this).prev().find('input[type=text]:eq(0)').val());
+            var keyword = $.trim($(this).prev().val());
             var name = controls.db_select.val();
             refresh({name:name,page:1,keyword:keyword});
         });
@@ -102,7 +101,7 @@ define(function(require,exports) {
                 }
                 }
             ],
-
+            styleUI : 'Bootstrap',
             datatype: 'json',
             url: urls.get_db_tables,
             rowNum: 10,
@@ -119,7 +118,7 @@ define(function(require,exports) {
                     var retObj = JSON.parse(ret);
                     if (retObj.status == 0) {
                         var retArr = [];
-                        layui.each(retObj.data.rows,function(i,o){
+                        $.each(retObj.data.rows,function(i,o){
                             retArr.push({name:o});
                         });
 
@@ -134,23 +133,20 @@ define(function(require,exports) {
             pager: "#system_model_tools_list_grid_pager"
         });
         // 初始化宽宽，用于自适应宽度
-        $("#system_model_tools_list_grid").setGridWidth($("#admin-tab-container").width() - 10, true);
+        $("#system_model_tools_list_grid").setGridWidth($("#page-wrapper").width(), true);
     }
 
     function initSelect() {
         ajaxUtil.doAjaxGet(urls.get_connetion_list,null).done(function(ret){
             if(ret.status == 0) {
                 controls.db_select.empty();
-                layui.each(ret.data,function(i,o){
+                $.each(ret.data,function(i,o){
                     controls.db_select.append('<option value="'+o+'">'+o+'</option>')
                 });
 
-                form.render();
             }
         });
     }
 
-    (function () {
-        init();
-    })();
+   exports.init = init;
 });
