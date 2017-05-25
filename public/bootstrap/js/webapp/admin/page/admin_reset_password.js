@@ -1,26 +1,50 @@
 /**
  * Created by jhzhang on 2017/5/12.
  */
-layui.use(['form', 'ajaxUtil'], function(){
-    var form = layui.form();
-    var ajaxUtil = layui.ajaxUtil;
-    var commonUtil = layui.commonUtil;
-    var $ = layui.jquery;
+define(function(require,exports) {
+    var ajaxUtil = require('util/ajaxUtil').ajaxUtil;
+    var commonUtil = require('util/commonUtil').commonUtil;
 
     var urls = {};
     urls.reset_password = '/admin/user/reset-password';
 
-    //监听提交
-    form.on('submit(reset_password)', function(data){
-        ajaxUtil.doAjaxGet(urls.reset_password,data.field).done(function(ret) {
-            if(ret.status == 0) {
-                $('#resetPwdBtn').trigger('click');
+    var ctrl = {};
+    ctrl.admin_reset_panel = $('#admin_reset_panel');
 
-                commonUtil.toast(ret.msg);
-            } else {
-                commonUtil.toast(ret.msg);
-            }
+    function init() {
+        bindEvent();
+    }
+
+    function bindEvent() {
+        ctrl.admin_reset_panel.find('button:eq(-1)').bind('click',function(){
+            ctrl.admin_reset_panel.find('input:eq(0)').val('');
+            ctrl.admin_reset_panel.find('input:eq(1)').val('');
+            ctrl.admin_reset_panel.find('input:eq(2)').val('');
         });
-        return false;
-    });
+
+        ctrl.admin_reset_panel.find('button:eq(-2)').bind('click',function(){
+            var args = {
+                old_pwd:$.trim( ctrl.admin_reset_panel.find('input:eq(0)').val()),
+                new_pwd:$.trim( ctrl.admin_reset_panel.find('input:eq(1)').val()),
+                new_pwd_confirm:$.trim( ctrl.admin_reset_panel.find('input:eq(2)').val())
+
+            };
+
+            ajaxUtil.doAjaxGet(urls.reset_password,args).done(function(ret) {
+                if(ret.status == 0) {
+                    $('#resetPwdBtn').trigger('click');
+
+                    commonUtil.toast(ret.msg);
+                } else {
+                    commonUtil.toast(ret.msg);
+                }
+            });
+        });
+
+    }
+
+    //监听提交
+
+
+    exports.init = init;
 });

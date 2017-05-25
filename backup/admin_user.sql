@@ -1,24 +1,22 @@
 /*
- Navicat Premium Data Transfer
+Navicat MySQL Data Transfer
 
- Source Server         : vagrant
- Source Server Type    : MySQL
- Source Server Version : 50717
- Source Host           : 192.168.33.10
- Source Database       : little-man
+Source Server         : localhost
+Source Server Version : 50718
+Source Host           : localhost:3306
+Source Database       : db_farfir_spas
 
- Target Server Type    : MySQL
- Target Server Version : 50717
- File Encoding         : utf-8
+Target Server Type    : MYSQL
+Target Server Version : 50718
+File Encoding         : 65001
 
- Date: 03/16/2017 13:49:31 PM
+Date: 2017-05-25 17:13:50
 */
 
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
---  Table structure for `admin_user`
+-- Table structure for admin_user
 -- ----------------------------
 DROP TABLE IF EXISTS `admin_user`;
 CREATE TABLE `admin_user` (
@@ -28,15 +26,17 @@ CREATE TABLE `admin_user` (
   `type` tinyint(3) unsigned DEFAULT NULL,
   `rights` text COLLATE utf8_unicode_ci,
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_login_time` datetime DEFAULT NULL,
+  `mobile` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '手机号',
+  `weixin` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '微信号',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `unique` (`id`) USING BTREE,
   KEY `login_index` (`account`,`password`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='后台用户';
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='后台管理员表';
 
 -- ----------------------------
---  Records of `admin_user`
+-- Records of admin_user
 -- ----------------------------
-BEGIN;
-INSERT INTO `admin_user` VALUES ('1', 'admin', 'admin', '0', '[]', null), ('28', 'root', 'root', '1', '[{&quot;title&quot;:&quot;订货管理&quot;,&quot;level&quot;:0},{&quot;title&quot;:&quot;产品管理&quot;,&quot;level&quot;:1},{&quot;title&quot;:&quot;弹出层&quot;,&quot;view&quot;:&quot;page/layui.html&quot;,&quot;level&quot;:2},{&quot;title&quot;:&quot;日期时间选择&quot;,&quot;view&quot;:&quot;page/datetime.html&quot;,&quot;level&quot;:2},{&quot;title&quot;:&quot;多功能分页&quot;,&quot;view&quot;:&quot;page/pagenate.html&quot;,&quot;level&quot;:2},{&quot;title&quot;:&quot;模板引擎&quot;,&quot;view&quot;:&quot;page/tpl.html&quot;,&quot;level&quot;:2},{&quot;title&quot;:&quot;富文本编辑器&quot;,&quot;view&quot;:&quot;page/text.html&quot;,&quot;level&quot;:2},{&quot;title&quot;:&quot;文件上传&quot;,&quot;view&quot;:&quot;page/fileupload.html&quot;,&quot;level&quot;:2},{&quot;title&quot;:&quot;树形菜单&quot;,&quot;view&quot;:&quot;page/tree.html&quot;,&quot;level&quot;:2},{&quot;title&quot;:&quot;工具块&quot;,&quot;view&quot;:&quot;page/tools.html&quot;,&quot;level&quot;:2},{&quot;title&quot;:&quot;流加载&quot;,&quot;view&quot;:&quot;page/flow.html&quot;,&quot;level&quot;:2},{&quot;title&quot;:&quot;代码修饰器&quot;,&quot;view&quot;:&quot;page/code.html&quot;,&quot;level&quot;:2}]', '2017-03-10 13:49:26');
-COMMIT;
-
-SET FOREIGN_KEY_CHECKS = 1;
+INSERT INTO `admin_user` VALUES ('1', 'admin', 'admin', '0', '[]', null, null, null, null, null);
+SET FOREIGN_KEY_CHECKS=1;

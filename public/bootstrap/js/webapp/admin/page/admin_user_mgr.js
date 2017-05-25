@@ -1,13 +1,10 @@
 /**
  * Created by jhzhang on 2017/5/12.
  */
-layui.use(['laypage', 'form'], function () {
-    var laypage = layui.laypage;
-    var $ = layui.jquery;
-    var layer = layui.layer;
-    var ajaxUtil = layui.ajaxUtil;
-    var form = layui.form();
-    var commonUtil = layui.commonUtil;
+define(function(require,exports){
+    var ajaxUtil = require('util/ajaxUtil').ajaxUtil;
+    var logUtil = require('util/logUtil').logUtil;
+    var commonUtil = require('util/commonUtil').commonUtil;
 
     var ctrl = {};
     ctrl.admin_user_mgr_ctrl_panel = $('#admin_user_mgr_ctrl_panel');
@@ -47,6 +44,11 @@ layui.use(['laypage', 'form'], function () {
         }
     };
 
+    function init() {
+        bindEvent();
+        loadModelData();
+    }
+
     function initTreeList(data) {
         var def = $.Deferred();
 
@@ -65,25 +67,25 @@ layui.use(['laypage', 'form'], function () {
                 var nodes = [];
 
                 var menus = ret.data.menus;
-                layui.each(menus, function (i, menuObj) {
+                $.each(menus, function (i, menuObj) {
 
                     var tempMain = {};
                     tempMain.name = menuObj.title;
 
                     tempMain.children = [];
-                    layui.each(menuObj.nav_menu, function (i, navObj) {
+                    $.each(menuObj.nav_menu, function (i, navObj) {
                         var tempNav = {};
                         tempNav.name = navObj.title;
                         tempNav.children = [];
 
-                        layui.each(navObj.third_menu, function (i, thirdObj) {
+                        $.each(navObj.third_menu, function (i, thirdObj) {
                             var tempThird = {};
                             tempThird.name = thirdObj.title;
                             tempThird.title = thirdObj.title;
                             tempThird.view = thirdObj.view;
 
                             if (data) {
-                                layui.each(compareNodes, function (i, compNode) {
+                                $.each(compareNodes, function (i, compNode) {
                                     if (tempThird.name == compNode.title && tempThird.view == compNode.view && compNode.level == 2) {
                                         tempThird.checked = true;
                                     }
@@ -99,7 +101,7 @@ layui.use(['laypage', 'form'], function () {
                         });
 
                         if (data) {
-                            layui.each(compareNodes, function (i, compNode) {
+                            $.each(compareNodes, function (i, compNode) {
                                 if (tempNav.name == compNode.title && tempNav.view == compNode.view && compNode.level == 1) {
                                     tempNav.checked = true;
                                 }
@@ -115,7 +117,7 @@ layui.use(['laypage', 'form'], function () {
                     });
 
                     if (data) {
-                        layui.each(compareNodes, function (i, compNode) {
+                        $.each(compareNodes, function (i, compNode) {
                             if (tempMain.name == compNode.title && tempMain.view == compNode.view && compNode.level == 0) {
                                 tempMain.checked = true;
                             }
@@ -180,7 +182,7 @@ layui.use(['laypage', 'form'], function () {
                 }
                 }
             ],
-
+            styleUI : 'Bootstrap',
             datatype: 'json',
             url: urls.admin_user_query,
             rowNum: 10,
@@ -204,7 +206,7 @@ layui.use(['laypage', 'form'], function () {
             pager: "#admin_user_list_grid_pager"
         });
         // 初始化宽宽，用于自适应宽度
-        $("#admin_user_list_grid").setGridWidth($("#admin-tab-container").width() - 10, true);
+        $("#admin_user_list_grid").setGridWidth($("#page-wrapper").width(), true);
     }
 
     function bindEvent() {
@@ -220,17 +222,18 @@ layui.use(['laypage', 'form'], function () {
         });
 
         //监听提交
-        form.on('submit(admin_user_edit_confirm)', function (data) {
+        $('#admin_user_edit_panel').find('button:eq(-2)').bind('click', function () {
             var args = {};
-            args.account = data.field.account;
-            args.password = data.field.password;
+            args.account = $.trim(ctrl.admin_user_edit_panel.find('input:eq(0)').val());
+            args.password = $.trim(ctrl.admin_user_edit_panel.find('input:eq(1)').val());
+
             var rights = [];
 
             var zTree = $.fn.zTree.getZTreeObj("admin_user_menu_tree");
 
             var checkedNodes = zTree.getCheckedNodes(true);
 
-            layui.each(checkedNodes, function (i, nodesObj) {
+            $.each(checkedNodes, function (i, nodesObj) {
 //                    if(nodesObj.view !== undefined) {
                 var temp = {};
                 temp.title = nodesObj.name;
@@ -261,6 +264,8 @@ layui.use(['laypage', 'form'], function () {
 
         // 重置
         $('#admin_user_edit_panel').find('button:eq(-1)').bind('click', function () {
+            ctrl.admin_user_edit_panel.find('input:eq(0)').val("");
+            ctrl.admin_user_edit_panel.find('input:eq(1)').val("");
             initTreeList();
         });
 
@@ -318,8 +323,5 @@ layui.use(['laypage', 'form'], function () {
     }
 
 
-    (function () {
-        bindEvent();
-        loadModelData();
-    })();
+    exports.init = init;
 });

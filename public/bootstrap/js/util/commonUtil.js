@@ -186,5 +186,11 @@ define(function(require,exports) {
         return flag;
     };
 
+    commonUtil.htmlDecode = function (s) {
+        var div = document.createElement('div');
+        div.innerHTML = s;
+        return div.innerText || div.textContent;
+    };
+
     exports.commonUtil = commonUtil;
 });

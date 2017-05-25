@@ -1,21 +1,17 @@
 <div id="admin_user_list_panel">
-    <header class="panel-heading">
-        <h2 class="panel-title">用户列表</h2>
-    </header>
+    <h4 style="margin-top: 10px;">用户列表</h4>
 
-    <blockquote class="layui-elem-quote">
+    <blockquote class="blockquote">
         <div id="admin_user_mgr_ctrl_panel">
             <button type="button" class="btn btn-primary">新增</button>
         </div>
     </blockquote>
 
     <div id="admin_user_search_panel">
-        <div class="layui-input-inline">
-            <input type="text" autocomplete="off" class="layui-input" placeholder="用户名,支持模糊查询">
-        </div>
-        <div class="layui-input-inline">
-            <button class="layui-btn">搜索</button>
-        </div>
+
+        <input type="text" class="form-control" placeholder="用户名,支持模糊查询" style="width: 180px;display: inline-block;">
+
+        <button type="submit" class="btn btn-success" style="position: relative;top:-1px;">搜索</button>
     </div>
 
     <div style="margin-top: 10px;">
@@ -25,49 +21,53 @@
 </div>
 
 <div id="admin_user_edit_panel" style="display: none;">
-    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
-        <legend>新增/修改用户</legend>
-    </fieldset>
-    <blockquote class="layui-elem-quote">
+    <h4 style="margin-top: 10px;">新增/修改用户</h4>
+    <blockquote class="blockquote">
         <div>
-            <button class="layui-btn layui-btn-small"><i class="layui-icon">&#xe603;</i> 返回用户列表</button>
+            <button class="btn btn-primary">返回用户列表</button>
         </div>
     </blockquote>
 
-    <form class="layui-form layui-form-pane" action="">
-        <div class="layui-form-item">
-            <label class="layui-form-label">账号</label>
-            <div class="layui-input-inline">
-                <input lay-verify="required" type="text" name="account" autocomplete="off" class="layui-input">
+    <div>
+        <div>
+            <label>账号</label>
+            <div >
+                <input type="text" class="form-control" name="account" autocomplete="off">
             </div>
         </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">密码</label>
-            <div class="layui-input-inline">
-                <input lay-verify="required" type="text" name="password" autocomplete="off" class="layui-input">
+        <div >
+            <label >密码</label>
+            <div >
+                <input type="text" class="form-control" name="password" autocomplete="off">
             </div>
         </div>
 
-        <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">菜单权限</label>
-            <div class="layui-input-block">
+        <div>
+            <label >菜单权限</label>
+            <div >
                 <ul id="admin_user_menu_tree" class="ztree"
-                    style="height: 200px;overflow-y: scroll;border-right: 1px solid #e6e6e6;border-left: 1px solid #e6e6e6;border-bottom: 1px solid #e6e6e6;">
+                    style="height: 200px;overflow-y: scroll;border:1px solid #e6e6e6;">
 
                 </ul>
             </div>
         </div>
 
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="admin_user_edit_confirm">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        <div >
+            <div style="margin-top: 10px;">
+                <button class="btn btn-primary">立即提交</button>
+                <button class="btn btn-default">重置</button>
             </div>
         </div>
-    </form>
+    </div>
 </div>
-
-<script>
-
+<script type="text/javascript">
+    seajs.config({
+        alias: {},
+        debug: 0
+        // 0: 只输出少量信息 1：输出大量信息 2：对已加载的文件不进行缓存
+    });
+    seajs.use('webapp/admin/page/admin_user_mgr.js?'+Math.random(), function (i) {
+        i.init();
+    });
 </script>
