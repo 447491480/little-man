@@ -44,14 +44,14 @@
         <div class="hoe-right-header" hoe-position-type="relative">
             <span class="hoe-sidebar-toggle"><a href="javascript:;"></a></span>
             <!--<ul class="left-navbar">-->
-                <!--<li>-->
-                    <!--<div class="top-search hidden-xs">-->
-                        <!--<form>-->
-                            <!--<input type="text" class="form-control" placeholder="Search here">-->
-                            <!--<i class="ion-search"></i>-->
-                        <!--</form>-->
-                    <!--</div>-->
-                <!--</li>-->
+            <!--<li>-->
+            <!--<div class="top-search hidden-xs">-->
+            <!--<form>-->
+            <!--<input type="text" class="form-control" placeholder="Search here">-->
+            <!--<i class="ion-search"></i>-->
+            <!--</form>-->
+            <!--</div>-->
+            <!--</li>-->
             <!--</ul>-->
             <ul class="right-navbar navbar-right">
                 <li class="dropdown">
@@ -77,29 +77,30 @@
                     </a>
                 </li>
 
-                <% if(data.menus.length) { %>
+                <% if(data.menus && data.menus.length) { %>
                 <% data.menus.forEach(function(menu, mi){ %>
-
-
-                <li class="hoe-has-menu">
+                <li class="<% if(menu.nav_menu) { %>hoe-has-menu<% } %>">
                     <a href="javascript:void(0)">
                         <i class="fa fa-th-large"></i>
                         <span data-url="<%= menu.view %>" class="menu-text"><%= menu.title %></span>
                         <span class="selected"></span>
                     </a>
+
+                    <% if(menu.nav_menu) { %>
                     <ul class="hoe-sub-menu">
-                        <% if(menu.nav_menu.length) { %>
+                        <% if(menu.nav_menu && menu.nav_menu.length) { %>
                         <% menu.nav_menu.forEach(function(nav_item, ni){ %>
 
-
-                        <li class="hoe-has-menu">
+                        <li class="<% if(nav_item.third_menu) { %>hoe-has-menu<% } %>">
                             <a href="javascript:void(0)">
                                 <span data-url="<%= nav_item.view %>" class="menu-text"><%= nav_item.title %></span>
                                 <span class="selected"></span>
                             </a>
+
+                            <% if(nav_item.third_menu) { %>
                             <ul class="hoe-sub-menu">
 
-                                <% if(nav_item.third_menu.length) { %>
+                                <% if(nav_item.third_menu && nav_item.third_menu.length) { %>
                                 <% nav_item.third_menu.forEach(function(third, ti){ %>
                                 <li>
                                     <a href="javascript:void(0)">
@@ -110,10 +111,13 @@
                                 <% }) %>
                                 <% } %>
                             </ul>
+                            <% } %>
+
                         </li>
                         <% }) %>
                         <% } %>
                     </ul>
+                    <% } %>
                 </li>
                 <% }) %>
                 <% } %>
@@ -126,9 +130,9 @@
             <!--<div class="space-20"></div>-->
             <div class="container">
                 <!--<div class="row">-->
-                    <div id="page-wrapper">
+                <div id="page-wrapper">
 
-                    </div>
+                </div>
                 <!--</div>-->
             </div>
         </section><!--end main content-->
