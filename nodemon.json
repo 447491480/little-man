@@ -2,6 +2,8 @@
   "restartable": "rs",
   "ignore": [
     ".git",
+    "sessions",
+    "logs",
     "node_modules/**/node_modules"
   ],
   "verbose": true,
@@ -14,7 +16,9 @@
   "watch": [
     "*.js",
     "*.html",
-    "*.css"
+    "*.css",
+    "*.json",
+    "*.yaml"
   ],
   "env": {
   },

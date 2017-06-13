@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": "NODE_ENV=dev pm2 start app.js --watch --node-args='--harmony' --name 'little-man'",
+    "test": "nodemon app.js",
     "start": "NODE_ENV=prod pm2 start app.js -i max --node-args='--harmony' --name 'little-man'"
   },
   "dependencies": {
