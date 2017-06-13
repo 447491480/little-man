@@ -3,7 +3,7 @@
  */
 
 var sessionFilter = require('../../../filters/adminSessionFilter');
-var pagerService = require('../../../services/common/pagerService');
+var pagerService = require('../../../services/common/pager');
 var configure = require('little-man-config');
 var SequelizeAuto = require('sequelize-auto');
 var path = require('path');

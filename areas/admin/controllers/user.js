@@ -1,8 +1,8 @@
 /**
  * Created by chang on 2017/2/14.
  */
-var userService = require('../../../services/admin/userService');
-var pagerService = require('../../../services/common/pagerService');
+var userService = require('../../../services/admin/user');
+var pagerService = require('../../../services/common/pager');
 
 module.exports = {
     get_checkUserLogin : function(req,res) {

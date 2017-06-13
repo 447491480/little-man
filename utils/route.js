@@ -34,9 +34,7 @@ module.exports = {
                     }
                     list.forEach(function (file) {
                         var fileName = path.join(self.areaDirectory, "/", area, "/", self.controllerDirname) + '/' + file;
-                        if (fileName.indexOf('Controller') == -1 ||
-                            !self.isFileModule(file))
-                            return;
+                        if (!self.isFileModule(file)) return;
                         var controller = require(fileName);
                         var aliases = controller['aliases'] || [];
                         delete controller['aliases'];
@@ -207,8 +205,8 @@ module.exports = {
     translateFileNameToControllerName: function (fileName) {
         return fileName
             .slice(0,
-            //Get everything before the last dot
-            fileName.lastIndexOf('.'))
+                //Get everything before the last dot
+                fileName.lastIndexOf('.'))
             .replace('Controller', '');
     },
 

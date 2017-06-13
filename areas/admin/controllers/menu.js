@@ -1,7 +1,7 @@
 /**
  * Created by chang on 2017/2/10.
  */
-var menuService = require('../../../services/admin/menuService');
+var menuService = require('../../../services/admin/menu');
 var sessionFilter = require('../../../filters/adminSessionFilter');
 
 module.exports = {
