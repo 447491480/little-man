@@ -50,8 +50,6 @@ var cors = require('cors');
 global.db = require(path.join(__dirname, 'utils', 'db'));
 global.pager = require(path.join(__dirname, 'utils', 'pager'));
 global.helper = require(path.join(__dirname, 'utils', 'helper'));
-global.async = require('asyncawait/async');
-global.await = require('asyncawait/await');
 
 log4js.configure();
 app.use(log4js.useLog());

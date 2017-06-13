@@ -5,7 +5,7 @@
 var moment = require('moment');
 
 var userService = {
-    checkUserLogin: async(function (account, password, req) {
+    checkUserLogin: async function (account, password, req) {
         var data = await(db().admin_user.findOne({
             where: {account: account, password: password}
         }));
@@ -16,9 +16,9 @@ var userService = {
         } else {
             throw '用户名或者密码不正确';
         }
-    }),
+    },
 
-    saveUser: async(function (data) {
+    saveUser: async function (data) {
         if (data.id) {
             var id = data.id;
             delete data['id'];
@@ -37,15 +37,15 @@ var userService = {
 
             return await(db().admin_user.create(data));
         }
-    }),
+    },
 
-    deleteUser: async(function (id) {
+    deleteUser: async function (id) {
         return await(db().admin_user.destroy({
             where: {id: id}
         }))
-    }),
+    },
 
-    queryUser: async(function (page, limit, keyword) {
+    queryUser: async function (page, limit, keyword) {
         var offset = (page - 1) * limit;
 
         var whereCase = {};
@@ -60,17 +60,17 @@ var userService = {
         }));
 
         return pager.gridWrap(ret.rows, page, limit, ret.count);
-    }),
+    },
 
-    isAccountExist: async(function (account) {
+    isAccountExist: async function (account) {
         return await(db().admin_user.count({
             where: {
                 account: account
             }
         }));
-    }),
+    },
 
-    resetPassword: async(function (id, oldpass, newpass) {
+    resetPassword: async function (id, oldpass, newpass) {
         if (oldpass == newpass) {
             throw '新密码不能和原始密码相同';
         }
@@ -82,7 +82,7 @@ var userService = {
         }
 
         return await(db().admin_user.update({password: newpass}, {where: {id: id}}));
-    })
+    }
 };
 
 module.exports = userService;

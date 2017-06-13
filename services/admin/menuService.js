@@ -5,7 +5,7 @@
 var configure = require('little-man-config');
 
 var menuService = {
-    getUserMenu: async(function (user_id) {
+    getUserMenu: async function (user_id) {
         var menus = menuService.readMenuConfig();
 
         var user = await(db().admin_user.findOne({
@@ -78,7 +78,7 @@ var menuService = {
         }
 
         return menus;
-    }),
+    },
 
     readMenuConfig: function () {
         return configure.get('admin');
