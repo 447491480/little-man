@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "body-parser": "^1.17.2",
+    "component-emitter": "^1.2.1",
+    "component-inherit": "0.0.3",
     "config-lite": "^1.6.0",
     "connect-flash": "^0.1.1",
     "connect-multiparty": "^2.0.0",
@@ -34,6 +36,7 @@
     "little-man-config": "^1.0.9",
     "lodash": "^4.17.4",
     "log4js": "^1.1.0",
+    "long-timeout": "^0.1.1",
     "md5": "^2.2.1",
     "moment": "^2.18.1",
     "morgan": "^1.8.2",
@@ -48,6 +51,7 @@
     "serve-favicon": "^2.4.3",
     "session-file-store": "^1.0.0",
     "socket.io": "^1.7.4",
+    "sorted-array-functions": "^1.0.0",
     "utf8": "^2.1.2",
     "uuid": "^3.0.1",
     "zengming": "^0.1.4"
