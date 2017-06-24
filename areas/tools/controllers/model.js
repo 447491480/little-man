@@ -2,12 +2,11 @@
  * Created by chang on 2017/2/25.
  */
 
-var sessionFilter = require('../../../filters/adminSessionFilter');
-var pagerService = require('../../../services/common/pager');
-var configure = require('little-man-config');
-var SequelizeAuto = require('sequelize-auto');
-var path = require('path');
-var config = configure.get('db');
+const sessionFilter = require('../../../filters/adminSessionFilter');
+const configure = require('little-man-config');
+const SequelizeAuto = require('sequelize-auto');
+const path = require('path');
+const config = configure.get('db');
 
 module.exports = {
     get_connectionList: [sessionFilter, function (req, res) {
@@ -16,7 +15,7 @@ module.exports = {
 
     get_dbTables: [sessionFilter, function (req, res) {
         var name = req.query.name || 'default';
-        var pageLimit = pagerService.requestFilter(req);
+        var pageLimit = pager.requestFilter(req);
         var keyword = req.query.keyword || '';
 
         db[name].sequelize.getQueryInterface().showAllTables().then(function (ret) {

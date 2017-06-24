@@ -2,7 +2,6 @@
  * Created by chang on 2017/2/14.
  */
 var userService = require('../../../services/admin/user');
-var pagerService = require('../../../services/common/pager');
 
 module.exports = {
     get_checkUserLogin : function(req,res) {
@@ -23,7 +22,7 @@ module.exports = {
 
     get_query: function (req, res) {
         var keyword = req.query.keyword || '';
-        var pageLimit = pagerService.requestFilter(req);
+        var pageLimit = pager.requestFilter(req);
 
         userService.queryUser(pageLimit.page,pageLimit.limit,keyword).then(function(data) {
             res.jsonWrap(data);

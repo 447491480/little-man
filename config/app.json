@@ -2,7 +2,7 @@
     "default_area":"admin",
     "default_controller":"page",
     "default_action":"login",
-    "default_port":3001,
+    "default_port":3080,
     "session_secret":"more-express-little-man",
     "cookie_maxAge":172800000,
     "default_theme": "default"
