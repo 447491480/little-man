@@ -1,21 +1,21 @@
 /**
  * Created by chang on 2017/2/14.
  */
-var moment = require('moment');
-var uuidV1 = require('uuid/v1');
-var uuidV4 = require('uuid/v4');
-var md5 = require('md5');
+const moment = require('moment');
+const uuidV1 = require('uuid/v1');
+const uuidV4 = require('uuid/v4');
+const md5 = require('md5');
 
 module.exports = {
-    genTimeBaseUUID : function(){
+    uuidV1 : function(){
         return uuidV1();
     },
 
-    genRandomBaseUUID : function () {
+    uuidV4 : function () {
         return uuidV4();
     },
 
-    getCurrentDate : function (fmt) {
+    now : function (fmt) {
         fmt = fmt || "YYYY-MM-DD HH:mm:ss";
         return moment().format(fmt);
     },
