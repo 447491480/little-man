@@ -27,7 +27,7 @@ app.use(function (req, res, next) {
     res.jsonWrap = function (data, status, msg) {
         status = status || 0;
         msg = msg || '操作成功';
-        data = data || null;
+        data = data || false;
 
         res.json({data: data, status: status, msg: msg});
     };
