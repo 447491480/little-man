@@ -1,8 +1,8 @@
 /**
  * Created by chang on 2017/2/9.
  */
-var menuService = require('../../../services/admin/menu');
-var sessionFilter = require('../../../filters/adminSessionFilter');
+const menuService = require('../../../services/admin/menu');
+const sessionFilter = require('../../../filters/adminSessionFilter');
 
 module.exports = {
     get_index: [sessionFilter,function (req, res) {
@@ -30,7 +30,7 @@ module.exports = {
     },
 
     post_getPart : [sessionFilter, function (req, res) {
-        var page = req.body.page;
+        let page = req.body.page;
         res.render('admin/'+page);
     }],
 

@@ -2,11 +2,9 @@
  * Created by chang on 2017/2/13.
  */
 
-var moment = require('moment');
-
-var userService = {
+const userService = {
     checkUserLogin: async function (account, password, req) {
-        var data = await(db().admin_user.findOne({
+        let data = await(db().admin_user.findOne({
             where: {account: account, password: password}
         }));
 
@@ -20,7 +18,7 @@ var userService = {
 
     saveUser: async function (data) {
         if (data.id) {
-            var id = data.id;
+            let id = data.id;
             delete data['id'];
 
             return await(db().admin_user.update(data, {
@@ -46,14 +44,14 @@ var userService = {
     },
 
     queryUser: async function (page, limit, keyword) {
-        var offset = (page - 1) * limit;
+        let offset = (page - 1) * limit;
 
-        var whereCase = {};
+        let whereCase = {};
         if(keyword) {
             whereCase.account = {$like:'%'+keyword+'%'};
         }
 
-        var ret = await(db().admin_user.findAndCountAll({
+        let ret = await(db().admin_user.findAndCountAll({
             offset: offset,
             limit: limit,
             where: whereCase
@@ -75,7 +73,7 @@ var userService = {
             throw '新密码不能和原始密码相同';
         }
 
-        var user = await(db().admin_user.findOne({where: {id: id}}));
+        let user = await(db().admin_user.findOne({where: {id: id}}));
 
         if (user && user.password != oldpass) {
             throw '原始密码不正确';

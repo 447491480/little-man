@@ -1,8 +1,8 @@
-var configure = require('little-man-config');
+const configure = require('little-man-config');
 
-var theme = configure.get("app")['default_theme'] || "default";
+const theme = configure.get("app")['default_theme'] || "default";
 
-var sub_theme = "";
+let sub_theme = "";
 if(theme === "bootstrap") {
     sub_theme = "/light"
 }

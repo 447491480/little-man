@@ -1,12 +1,12 @@
 /**
  * Created by chang on 2017/2/14.
  */
-var userService = require('../../../services/admin/user');
+const userService = require('../../../services/admin/user');
 
 module.exports = {
     get_checkUserLogin : function(req,res) {
-        var account = req.query.account;
-        var password = req.query.password;
+        let account = req.query.account;
+        let password = req.query.password;
 
         if(!account && !password) {
             res.jsonWrap(null,1,'用户名或者密码不能为空');
@@ -21,8 +21,8 @@ module.exports = {
     },
 
     get_query: function (req, res) {
-        var keyword = req.query.keyword || '';
-        var pageLimit = pager.requestFilter(req);
+        let keyword = req.query.keyword || '';
+        let pageLimit = pager.requestFilter(req);
 
         userService.queryUser(pageLimit.page,pageLimit.limit,keyword).then(function(data) {
             res.jsonWrap(data);
@@ -33,7 +33,7 @@ module.exports = {
     },
 
     post_save: function (req, res) {
-        var data = {
+        let data = {
             account : req.body.account || '',
             password : req.body.password || '',
             rights : req.body.rights,
@@ -53,7 +53,7 @@ module.exports = {
     },
 
     get_delete: function (req, res) {
-        var id = req.query.id;
+        let id = req.query.id;
         userService.deleteUser(id).then(function(msg){
             res.jsonWrap(msg);
         }).catch(function(e){
@@ -63,9 +63,9 @@ module.exports = {
     },
 
     get_resetPassword : function(req,res) {
-        var old_pwd = req.query.old_pwd;
-        var new_pwd = req.query.new_pwd;
-        var new_pwd_confirm = req.query.new_pwd_confirm;
+        let old_pwd = req.query.old_pwd;
+        let new_pwd = req.query.new_pwd;
+        let new_pwd_confirm = req.query.new_pwd_confirm;
 
         if(!old_pwd || !new_pwd || !new_pwd_confirm) {
             res.jsonWrap(null,2,'输入项不能为空');
