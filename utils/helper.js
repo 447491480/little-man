@@ -7,24 +7,29 @@ const uuidV4 = require('uuid/v4');
 const md5 = require('md5');
 
 module.exports = {
-    uuidV1 : function(){
+    uuid: function (dna) {
+        dna = dna || '';
+        return uuidV4().substr(9,27) +  '-'+ uuidV1().substr(24,12) + '-' + md5(dna).substr(0,5)
+    },
+
+    uuidV1: function () {
         return uuidV1();
     },
 
-    uuidV4 : function () {
+    uuidV4: function () {
         return uuidV4();
     },
 
-    now : function (fmt) {
+    now: function (fmt) {
         fmt = fmt || "YYYY-MM-DD HH:mm:ss";
         return moment().format(fmt);
     },
 
-    md5 : function(msg) {
+    md5: function (msg) {
         return md5(msg);
     },
 
-    parse : function(msg) {
+    parse: function (msg) {
         return JSON.parse(JSON.stringify(msg));
     }
 };
