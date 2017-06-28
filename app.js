@@ -5,7 +5,7 @@ const fs = require('fs');
 // 定时任务模块
 const schedule = require('node-schedule');
 
-//配置管理
+// 配置管理
 const configure = require('little-man-config');
 
 // 载入app配置文件
