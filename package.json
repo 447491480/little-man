@@ -14,8 +14,10 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": "NODE_ENV=test nodemon app.js",
-    "start": "NODE_ENV=prod pm2 start app.js -i max --node-args='--harmony' --name 'little-man'"
+    "dev": "NODE_ENV=dev nodemon app.js",
+    "win-dev": "set NODE_ENV=dev && nodemon app.js",
+    "start": "NODE_ENV=prod pm2 start app.js -i max --node-args='--harmony' --name 'manager'",
+    "win-start": "set NODE_ENV=prod && pm2 start app.js -i max --node-args='--harmony' --name 'manager'"
   },
   "dependencies": {
     "body-parser": "^1.17.2",
