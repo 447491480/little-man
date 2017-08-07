@@ -163,7 +163,7 @@ app.use(function (req, res, next) {
 
 // 错误或者服务器500异常处理
 app.use(function (err, req, res, next) {
-    console.log(err);
+    console.log(req.method,req.url,err);
 
     let error = (req.app.get('env') === 'development') ? err : {};
     //写错误日志
