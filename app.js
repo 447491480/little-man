@@ -1,3 +1,5 @@
+process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
+
 // 载入常用nodejs模块
 const path = require('path');
 const fs = require('fs');
@@ -161,9 +163,11 @@ app.use(function (req, res, next) {
 
 // 错误或者服务器500异常处理
 app.use(function (err, req, res, next) {
+    console.log(err);
+
     let error = (req.app.get('env') === 'development') ? err : {};
     //写错误日志
-    let errorMes = '[' + Date() + ']' + req.url + '\n' + '[' + error.stack + ']' + '\n';
+    let errorMes = '[' + new Date() + ']' + req.url + '\n' + '[' + error.stack + ']' + '\n';
     errorLogStream.write(errorMes);
     let status = err.status || 500;
     res.status(status);

@@ -29,6 +29,10 @@ module.exports = {
         return md5(msg);
     },
 
+    rdmFlowNo : function () {
+        return this.now('YYYYMMDDHHmmss') + Math.floor(Math.random() * 10000000000000000);
+    },
+
     parse: function (msg) {
         return JSON.parse(JSON.stringify(msg));
     }
