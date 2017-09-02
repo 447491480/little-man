@@ -928,3 +928,14 @@ td.menu_text {
 .search_buttons #bs_search {
 	margin-left: 3px;
 }
+
+/*表头居中*/
+.ui-jqgrid .ui-jqgrid-htable .ui-th-div {
+	height: 17px;
+	margin-top: 5px;
+	display: inine-block;
+	text-align: center;
+}
+
+/*去掉表格缩放过程中产生的横向滚动条*/
+.ui-jqgrid .ui-jqgrid-bdiv{ overflow-x: hidden; }

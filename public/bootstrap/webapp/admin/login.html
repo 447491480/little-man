@@ -13,8 +13,6 @@
     <link href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/hoe-nav/hoe.css" rel="stylesheet">
     <!-- icons-->
     <link href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/ionicons/css/ionicons.min.css" rel="stylesheet">
-    <link href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/iCheck/custom.css" rel="stylesheet">
     <!--template custom css file-->
     <link href="/<%= _locals.setting.__ADMIN_STATIC__ %>/css/style.css" rel="stylesheet">
 
@@ -28,13 +26,22 @@
 </head>
 <body>
 
-<div class="page-center">
+<div>
+    <header id="hoe-header" hoe-lpanel-effect="shrink" style="">
+        <div class="hoe-left-header">
+            <a href="javascript:;"><span><%= _locals.setting.ADMIN_WEB_NAME %></span></a>
+        </div>
+
+        <div class="hoe-right-header" hoe-position-type="relative">
+
+        </div>
+    </header>
+</div>
+
+<div class="page-center" style="margin-top: 100px;">
     <div class="page-center-in">
         <form class="sign-box" id="login_panel">
-            <div class="sign-avatar">
-                <img src="/<%= _locals.setting.__ADMIN_STATIC__ %>/images/logo.png" alt="" style="width: 215px;">
-            </div>
-            <header class="sign-title"><%= _locals.setting.ADMIN_WEB_NAME %></header>
+            <header class="sign-title">管理员登录</header>
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="账号">
             </div>
@@ -65,7 +72,6 @@
 <script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="/<%= _locals.setting.__ADMIN_STATIC__ %>/js/app.js"></script>
 <!-- iCheck -->
-<script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/iCheck/icheck.min.js"></script>
 
 <script src="/<%= _locals.setting.__JAVASCRIPT__ %>/vendors/layer/layer.js"></script>
 <script src="/<%= _locals.setting.__JAVASCRIPT__ %>/sea.js"></script>
