@@ -5,7 +5,8 @@ module.exports = function(sequelize, DataTypes) {
 		id: {
 			type: DataTypes.INTEGER(11),
 			allowNull: false,
-			primaryKey: true
+			primaryKey: true,
+			autoIncrement: true
 		},
 		account: {
 			type: DataTypes.STRING(50),
@@ -27,6 +28,22 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.DATE,
 			allowNull: true,
 			defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+		},
+		email: {
+			type: DataTypes.STRING(255),
+			allowNull: true
+		},
+		last_login_time: {
+			type: DataTypes.DATE,
+			allowNull: true
+		},
+		mobile: {
+			type: DataTypes.STRING(20),
+			allowNull: true
+		},
+		weixin: {
+			type: DataTypes.STRING(50),
+			allowNull: true
 		}
 	}, {
 		tableName: 'admin_user',

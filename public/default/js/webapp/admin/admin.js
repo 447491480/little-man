@@ -5,10 +5,10 @@ layui.define(['form','element', 'layer', 'ajaxUtil', 'logUtil', 'commonUtil'], f
     var ajaxUtil = layui.ajaxUtil;
     var logUtil = layui.logUtil;
     var commonUtil = layui.commonUtil;
-    var element = layui.element();
+    var element = layui.element;
     var $ = layui.jquery;
     var layer = layui.layer;
-    var form = layui.form();
+    var form = layui.form;
 
     var controls = {};
     controls.page_node = $('#page-wrapper');
