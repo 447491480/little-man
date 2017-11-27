@@ -196,4 +196,4 @@ fs.readdirSync(taskDir)
 
 
 // 引入socket 服务端模块。如无需即时通讯，注释即可
-require(path.join(APP_PATH, 'utils', 'socket')).listen(server);
+//require(path.join(APP_PATH, 'utils', 'socket')).listen(server);
