@@ -1,3 +1,5 @@
+# [此项目已废弃，合并到repress-server项目中维护点击移步](https://github.com/447491480/repress)
+
 # little-man
 
 #### [开始使用](https://github.com/447491480/little-man/wiki/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8)
